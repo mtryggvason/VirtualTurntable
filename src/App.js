@@ -7,7 +7,7 @@ function App() {
   const [x, setX] = useState(0);
   const [initialized, setInitialized] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(45);
-
+  const [showMessage, setShowMessage] = useState(false);
   useEffect(() => {
     if(player) return;
     player = new Player({
@@ -31,7 +31,7 @@ function App() {
       DeviceMotionEvent.requestPermission()
       .then(response => {
         if (response == 'granted') {
-          window.addEventListener('devicemotion', throttle(100, (e) => {
+          window.addEventListener('devicemotion', debounce(25, (e) => {
             const angularVelocity = e.rotationRate.alpa
             const radiansPerSecond = angularVelocity * Math.PI/180;
             const revolutionsPerSecond = radiansPerSecond / (2 * Math.PI * (180/Math.PI));
@@ -40,6 +40,8 @@ function App() {
           }))
         }
       })
+   } else {
+    setShowMessage(true);
    }
   }
   const handleInputChange = throttle(500, (event) => setPlaybackRate(event.target.value))
@@ -48,6 +50,7 @@ function App() {
       <button disabled={!initialized} onClick={activateListener}> Press ME</button>
       <input onInput={handleInputChange} type="range" min="0" max="45" value={playbackRate} />
       {x}
+    {showMessage && <div>Looks like your device does not support the Device Motion event. Please try again with a mobile device</div>}
     </div>
   );
 }
