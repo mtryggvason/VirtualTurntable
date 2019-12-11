@@ -31,7 +31,7 @@ function App() {
       DeviceMotionEvent.requestPermission()
       .then(response => {
         if (response == 'granted') {
-          window.addEventListener('devicemotion', throttle(500, (e) => {
+          window.addEventListener('devicemotion', throttle(100, (e) => {
             const angularVelocity = e.rotationRate.alpa
             const radiansPerSecond = angularVelocity * Math.PI/180;
             const revolutionsPerSecond = radiansPerSecond / (2 * Math.PI * (180/Math.PI));
