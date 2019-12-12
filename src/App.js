@@ -80,7 +80,7 @@ function App() {
 
 const PlayerComponent = (props) => {
   useEffect(() => {
-    player = new Player({
+    const player = new Player({
       onload: () => props.onload(player),
       'url': props.url,
       'loop': props.loop,
