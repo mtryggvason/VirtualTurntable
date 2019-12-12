@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { throttle, debounce } from 'throttle-debounce';
+import { isMobile } from 'react-device-detect';
 import { Player } from 'tone';
-import { ReactComponent as Rotate } from './svgs/rotate.svg';
-
 import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-
+import { ReactComponent as Rotate } from './svgs/rotate.svg';
 import './App.css';
-let player
+
 function App() {
   const [x, setX] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -39,7 +38,7 @@ function App() {
           }));
         }
       })
-   } else if (window.DeviceOrientationEvent) {
+    } else if (window.DeviceOrientationEvent && isMobile) {
       player.start();
       setPlaying(true);
       window.addEventListener('devicemotion', throttle(100, (e) => {
