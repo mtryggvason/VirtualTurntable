@@ -56,3 +56,21 @@ button {
   font-weight: bold;
   padding: 10px;
 }
+
+.rotate {
+  animation: rotate;
+  animation-iteration-count: infinite;
+  animation-duration: 4s;
+}  
+
+.rotating-svg {
+  display: block;
+  margin: 0  auto 5px auto;
+  stroke: white;
+  width: 80px;
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg)}
+}
