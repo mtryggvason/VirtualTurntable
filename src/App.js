@@ -37,12 +37,18 @@ function App() {
           window.addEventListener('devicemotion', throttle(100, (e) => {
             const angularVelocity = e.rotationRate.alpa
             const rpm =  Math.round(e.rotationRate.gamma * 60 / 360);
-            setX(rpm)
-          }))
+            setX(rpm);
+          }));
         }
       })
+   } else if (window.DeviceOrientationEvent) {
+      window.addEventListener('devicemotion', throttle(100, (e) => {
+          const angularVelocity = e.rotationRate.alpa
+          const rpm =  Math.round(e.rotationRate.gamma * 60 / 360);
+          setX(rpm);
+        }));
    } else {
-    setShowMessage(true);
+      setShowMessage(true);
    }
   }
   return (
