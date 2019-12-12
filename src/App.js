@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
   if (player) player.playbackRate = Math.abs(x / 45);
-  player.reverse = x < 0
+  player.reverse = x > 0
   }, [x]);
 
 
