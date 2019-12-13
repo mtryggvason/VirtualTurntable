@@ -12,6 +12,16 @@ if (window.location.protocol != 'https:') {
   window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
+const setRPM = (gamma, player) => {
+  const rpm =  Math.round(egamma * 60 / 360);
+  if (player) {
+    const playbackRate = Math.abs(rpm / 45);
+    if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
+      player.playbackRate = Math.abs(x / 45);
+      player.reverse = rpm > 0
+    }
+  } 
+}
 
 
 function App() {
@@ -19,15 +29,6 @@ function App() {
   const [player, setPlayer] = useState(false);
   const [playing, setPlaying] = useState(false)
   const [showMessage, setShowMessage] = useState(false);
-  useEffect(() => {
-    if (player) {
-      const playbackRate = Math.abs(x / 45);
-      if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
-        player.playbackRate = Math.abs(x / 45);
-        player.reverse = x > 0
-      }
-    } 
-  }, [x]);
 
   const activateListener = () => {
  
@@ -40,9 +41,7 @@ function App() {
       .then(response => {
         if (response == 'granted') {
           window.addEventListener('devicemotion', throttle(100, (e) => {
-            const angularVelocity = e.rotationRate.alpa
-            const rpm =  Math.round(e.rotationRate.gamma * 60 / 360);
-            setX(rpm);
+            setRPM(e.rotationRate.gamma, player);
           }));
         }
       })
@@ -51,10 +50,8 @@ function App() {
       player.playbackRate = 0;
       setPlaying(true);
       window.addEventListener('devicemotion', throttle(100, (e) => {
-          const angularVelocity = e.rotationRate.alpa
-          const rpm =  Math.round(e.rotationRate.gamma * 60 / 360);
-          setX(rpm);
-        }));
+        setRPM(e.rotationRate.gamma, player);
+      }));
    } else {
       setShowMessage(true);
    }
