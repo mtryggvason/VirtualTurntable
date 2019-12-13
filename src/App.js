@@ -7,6 +7,13 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { ReactComponent as Rotate } from './svgs/rotate.svg';
 import './App.css';
 
+
+if (location.protocol != 'https:') {
+  location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
+
+
 function App() {
   const [x, setX] = useState(0);
   const [player, setPlayer] = useState(false);
