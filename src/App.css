@@ -8,7 +8,9 @@
   border-radius: 50%;
   position: absolute;
   max-width: calc(100% - 20px);
-  width: 400px; 
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
 }
 .vinyl-image.loading {
   opacity: 0.5;
