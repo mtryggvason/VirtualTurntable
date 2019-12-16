@@ -13,11 +13,11 @@ if (window.location.protocol != 'https:') {
 }
 
 const setRPM = (gamma, player) => {
-  const rpm =  Math.round(egamma * 60 / 360);
+  const rpm =  Math.round(gamma * 60 / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
     if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
-      player.playbackRate = Math.abs(x / 45);
+      player.playbackRate = playbackRate;
       player.reverse = rpm > 0
     }
   } 
@@ -39,7 +39,7 @@ function App() {
       setPlaying(true);
       DeviceMotionEvent.requestPermission()
       .then(response => {
-        if (response == 'granted') {
+        if (response === 'granted') {
           window.addEventListener('devicemotion', throttle(100, (e) => {
             setRPM(e.rotationRate.gamma, player);
           }));
@@ -64,7 +64,7 @@ function App() {
           setPlayer(player)
         }} 
         loop/>  
-      <img className={`vinyl-image center ${player ? '' :'loading'}`} src="/man.jpg" />
+      <img alt="vinyl" className={`vinyl-image center ${player ? '' :'loading'}`} src="/man.jpg" />
       <div className="vinyl-dot center" />
       {x}
     { !player && <Loader
