@@ -80,7 +80,7 @@ function App() {
     { player && !playing  && <button className="center" onClick={activateListener}> Get Started</button>}
     {playing && <div className="center message">
       <Rotate className="rotate rotating-svg"></Rotate>
-      Make sure your phone is in silent mode and rotate the phone to hear the song play</div>}
+      Make sure your phone is not on silent mode and rotate the phone to hear the song play</div>}
 
     {showMessage && <div className="center message">Looks like your device does not support the <a href="https://caniuse.com/#feat=deviceorientation">Device Motion event</a>. <br/>Please try again with a mobile device</div>}
     </div>
