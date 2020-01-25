@@ -10,6 +10,8 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { ReactComponent as Rotate } from './svgs/rotate.svg';
 import './App.css';
 
+let reversed = false,
+let buffers = [];
 let reversedBuffers = [];
 /**
  *  Reverse the buffer.
@@ -18,8 +20,14 @@ let reversedBuffers = [];
  */
 Buffer.prototype._reverse = function(){
 	if (this.loaded) {
-    this._buffer.copyToChannel(reversedBuffers[0], 0, 0);
-    this._buffer.copyToChannel(reversedBuffers[1], 1, 0);
+    reversed = !reversed;
+    if (reversed) {
+      this._buffer.copyToChannel(reversedBuffers[0], 0, 0);
+      this._buffer.copyToChannel(reversedBuffers[1], 1, 0);
+    } else {
+      this._buffer.copyToChannel(buffers[0], 0, 0);
+      this._buffer.copyToChannel(buffers[1], 1, 0);
+    }
     /*
 		for (var i = 0; i < this.numberOfChannels; i++){
       const buffer = this.getChannelData(i)
@@ -41,8 +49,7 @@ const setRPM = (gamma, player) => {
     const playbackRate = Math.abs(rpm / 45);
     if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
       player.playbackRate = playbackRate;
-      
-      //player.reverse = rpm > 0
+      player.reverse = rpm > 0
     }
   } 
 }
@@ -140,6 +147,7 @@ const PlayerComponent = (props) => {
       onload: () => {
         for (var i = 0; i < player._buffer.numberOfChannels; i++) {
           const buffer = player._buffer.getChannelData(i)
+          buffers.push(buffer);
           reversedBuffers.push(buffer.slice().reverse())
         }
         props.onload(player)
