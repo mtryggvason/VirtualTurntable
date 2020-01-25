@@ -10,7 +10,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { ReactComponent as Rotate } from './svgs/rotate.svg';
 import './App.css';
 
-let reversed = false,
+let reversed = false;
 let buffers = [];
 let reversedBuffers = [];
 /**
