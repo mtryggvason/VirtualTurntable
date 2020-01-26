@@ -49,7 +49,7 @@ const setRPM = (gamma, player) => {
     const playbackRate = Math.abs(rpm / 45);
     if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
       player.playbackRate = playbackRate;
-      player.reverse = rpm > 0
+      player.reverse = rpm < 0
     }
   } 
 }
@@ -134,7 +134,6 @@ function App() {
     { player && !playing  && <button className="center" onClick={activateListener}>Get Started</button>}
     {playing && <div className="center message">
       <Rotate className="rotate rotating-svg"></Rotate>
-      <input type="slider" />
       Turn of silent mode and rotate the phone to hear the song play</div>}
     {showMessage && <div className="center message">Looks like your device does not support the <a href="https://caniuse.com/#feat=deviceorientation">Device Motion event</a>. <br/>Please try again with a mobile device</div>}
     </div>
@@ -147,7 +146,7 @@ const PlayerComponent = (props) => {
       onload: () => {
         for (var i = 0; i < player._buffer.numberOfChannels; i++) {
           const buffer = player._buffer.getChannelData(i)
-          buffers.push(buffer);
+          buffers.push(buffer.slice());
           reversedBuffers.push(buffer.slice().reverse())
         }
         props.onload(player)
