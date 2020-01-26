@@ -28,13 +28,6 @@ Buffer.prototype._reverse = function(){
       this._buffer.copyToChannel(buffers[0], 0, 0);
       this._buffer.copyToChannel(buffers[1], 1, 0);
     }
-    /*
-		for (var i = 0; i < this.numberOfChannels; i++){
-      const buffer = this.getChannelData(i)
-      copyToChannel(source, channelNumber, startInChannel);
-			Array.prototype.reverse.call(buffer);
-    }
-    */
 	}
 	return this;
 };
@@ -49,7 +42,7 @@ const setRPM = (gamma, player) => {
     const playbackRate = Math.abs(rpm / 45);
     if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
       player.playbackRate = playbackRate;
-      player.reverse = rpm < 0
+      player.reverse = rpm > 0
     }
   } 
 }
