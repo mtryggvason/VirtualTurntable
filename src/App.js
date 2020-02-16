@@ -40,10 +40,8 @@ const setRPM = (gamma, player) => {
   const rpm =  Math.round(gamma * 60 / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    if (Math.abs(playbackRate - player.playbackRate) > 0.05) {
-      player.playbackRate = playbackRate;
-      player.reverse = rpm > 0
-    }
+    player.playbackRate = playbackRate;
+    player.reverse = rpm > 0
   } 
 }
 
@@ -94,7 +92,7 @@ function App() {
       setPlaying(true)
       const response = DeviceMotionEvent.requestPermission ? await DeviceMotionEvent.requestPermission() : 'granted';
       if (response === 'granted') {
-        const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(100));
+        const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(40));
         const subscription = stream.subscribe(e => setRPM(e.rotationRate.gamma, player));            
       }
     }
