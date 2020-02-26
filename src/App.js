@@ -9,10 +9,13 @@ import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { ReactComponent as Rotate } from './svgs/rotate.svg';
 import './App.css';
+import  NoSleep from 'nosleep.js';
 
 let reversed = false;
 let buffers = [];
 let reversedBuffers = [];
+const noSleep = new NoSleep();
+
 /**
  *  Reverse the buffer.
  *  @private
@@ -33,7 +36,7 @@ Buffer.prototype._reverse = function(){
 };
 
 if (window.location.protocol != 'https:') {
-  window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+  // window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
 const setRPM = (gamma, player) => {
@@ -87,12 +90,13 @@ function App() {
     player.playbackRate = 1;
     setPlaying(true)
     if (window.DeviceOrientationEvent && isMobile) {
-      player.start();
-      player.playbackRate = 1;
-      setPlaying(true)
+
       const response = DeviceMotionEvent.requestPermission ? await DeviceMotionEvent.requestPermission() : 'granted';
       if (response === 'granted') {
-        const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(40));
+        player.start();
+        player.playbackRate = 1;
+        setPlaying(true);
+        const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(20));
         const subscription = stream.subscribe(e => setRPM(e.rotationRate.gamma, player));            
       }
     }
