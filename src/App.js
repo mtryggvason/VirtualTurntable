@@ -43,31 +43,14 @@ const setRPM = (gamma, player) => {
   const rpm =  Math.round(gamma * 60 / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    player.playbackRate = playbackRate;
+    if (playbackRate > 0.05) {
+      player.playbackRate = playbackRate;
+
+    } else {
+      player.playbackRate = 0;
+    }
     player.reverse = rpm > 0
   } 
-}
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'setPlayer':
-      return {
-        ...state,
-        player: action.payload.player
-      };
-    case 'playing':
-      return {
-        ...state,
-        playing: true
-      };      
-    case 'showMessage':
-      return {
-        ...state,
-        showMessage: true
-      };
-    default:
-      throw new Error();
-  }
 }
 
 const initialState = {
@@ -90,14 +73,13 @@ function App() {
     player.playbackRate = 1;
     setPlaying(true)
     if (window.DeviceOrientationEvent && isMobile) {
-
       const response = DeviceMotionEvent.requestPermission ? await DeviceMotionEvent.requestPermission() : 'granted';
       if (response === 'granted') {
         player.start();
         player.playbackRate = 1;
         setPlaying(true);
         const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(20));
-        const subscription = stream.subscribe(e => setRPM(e.rotationRate.gamma, player));            
+        stream.subscribe(e => setRPM(e.rotationRate.gamma, player));            
       }
     }
   };
