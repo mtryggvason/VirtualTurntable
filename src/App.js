@@ -75,6 +75,7 @@ function App() {
       const response = DeviceMotionEvent.requestPermission ? await DeviceMotionEvent.requestPermission() : 'granted';
       if (response === 'granted') {
         player.start();
+        noSleep.enable();
         player.playbackRate = 0;
         setPlaying(true);
         const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(20));
