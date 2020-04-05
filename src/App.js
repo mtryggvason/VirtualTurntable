@@ -69,14 +69,13 @@ function App() {
   });
 
   const activateListener = async () => {
-    player.start();
     player.playbackRate = 1;
     setPlaying(true)
     if (window.DeviceOrientationEvent && isMobile) {
       const response = DeviceMotionEvent.requestPermission ? await DeviceMotionEvent.requestPermission() : 'granted';
       if (response === 'granted') {
         player.start();
-        player.playbackRate = 1;
+        player.playbackRate = 0;
         setPlaying(true);
         const stream = fromEvent(window, 'devicemotion').pipe(throttleTime(20));
         stream.subscribe(e => setRPM(e.rotationRate.gamma, player));            
@@ -99,7 +98,7 @@ function App() {
           setPlayer(player)
         }} 
         loop/>  
-      <img alt="vinyl" className={`vinyl-image center ${player ? '' :'loading'}`} src="/man.jpg" />
+      <img alt="vinyl" className={`vinyl-image center ${player ? '' :'loading'}`} src="man.jpg" />
       <div className="vinyl-dot center" />
     { !player && <Loader
          type="Puff"
