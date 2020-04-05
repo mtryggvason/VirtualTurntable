@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/VirtualTurntable/static/css/main.dad86d6c.chunk.css",
+    "main.js": "/VirtualTurntable/static/js/main.138cc173.chunk.js",
+    "main.js.map": "/VirtualTurntable/static/js/main.138cc173.chunk.js.map",
+    "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js",
+    "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js.map",
+    "static/css/2.f5298653.chunk.css": "/VirtualTurntable/static/css/2.f5298653.chunk.css",
+    "static/js/2.bbe6a5ce.chunk.js": "/VirtualTurntable/static/js/2.bbe6a5ce.chunk.js",
+    "static/js/2.bbe6a5ce.chunk.js.map": "/VirtualTurntable/static/js/2.bbe6a5ce.chunk.js.map",
+    "index.html": "/VirtualTurntable/index.html",
+    "precache-manifest.72357463302239b06d36582cd74c9312.js": "/VirtualTurntable/precache-manifest.72357463302239b06d36582cd74c9312.js",
+    "service-worker.js": "/VirtualTurntable/service-worker.js",
+    "static/css/2.f5298653.chunk.css.map": "/VirtualTurntable/static/css/2.f5298653.chunk.css.map",
+    "static/css/main.dad86d6c.chunk.css.map": "/VirtualTurntable/static/css/main.dad86d6c.chunk.css.map",
+    "static/js/2.bbe6a5ce.chunk.js.LICENSE": "/VirtualTurntable/static/js/2.bbe6a5ce.chunk.js.LICENSE",
+    "static/media/rotate.b424f259.svg": "/VirtualTurntable/static/media/rotate.b424f259.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e3292aa0.js",
+    "static/css/2.f5298653.chunk.css",
+    "static/js/2.bbe6a5ce.chunk.js",
+    "static/css/main.dad86d6c.chunk.css",
+    "static/js/main.138cc173.chunk.js"
+  ]
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 106 111" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(3.000000, 3.000000)" fill-rule="nonzero" stroke="#fff">
+            <path d="M50,100 C77.6142375,100 100,77.6142375 100,50 C100,22.3857625 77.6142375,0 50,0 C22.3857625,0 0,22.3857625 0,50" id="Oval" stroke-width="5"></path>
+            <polygon id="Triangle" fill="#fff" transform="translate(41.882241, 98.882241) rotate(273.000000) translate(-41.882241, -98.882241) " points="41.8822412 91.3822412 49.3822412 106.382241 34.3822412 106.382241"></polygon>
+        </g>
+    </g>
+</svg>
