@@ -164,7 +164,7 @@ const PlayerComponent = (props) => {
       url: props.url,
       loop: props.loop,
     }).toMaster();
-  }, []);
+  }, [props]);
   return null;
 };
 
