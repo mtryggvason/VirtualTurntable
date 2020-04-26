@@ -62,7 +62,7 @@ function App() {
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    //setShowMessage(!window.DeviceOrientationEvent || !isMobile);
+    setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
 
   const activateListener = async () => {
@@ -72,7 +72,7 @@ function App() {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      if (response === "granted") {
+      if (response === "granted" && isMobile) {
         player.start();
         noSleep.enable();
         player.playbackRate = 0;
@@ -83,10 +83,8 @@ function App() {
       }
     }
   };
-  const reverse = () => {
-    player.reverse = !player.reverse;
-  };
 
+  /*
   const devTools = (
     <>
       <button onClick={reverse}>REVERSE </button>
@@ -102,7 +100,7 @@ function App() {
       )
     </>
   );
-
+*/
   return (
     <div className="app">
       <PlayerComponent
