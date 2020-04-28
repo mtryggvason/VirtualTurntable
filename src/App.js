@@ -73,6 +73,7 @@ function App() {
   }, []);
 
   const activateListener = async () => {
+    player.playbackRate = 1;
     setPlaying(true);
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
@@ -99,6 +100,7 @@ function App() {
         }, 100);
         */
         stream.subscribe((e) => {
+          setRPM(e.rotationRate.gamma, player);
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
