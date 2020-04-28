@@ -62,6 +62,7 @@ const updateOffset = (gamma, offset, timeSinceLastUpdate) => {
   const rpm = Math.round((gamma * 60) / 360);
   const playbackRate = Math.abs(rpm / 45);
   console.log(offset);
+  console.log(timeSinceLastUpdate);
   return offset + (playbackRate * timeSinceLastUpdate) / 1000;
 };
 
@@ -107,7 +108,7 @@ function App() {
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
-            lastRoationTime - new Date()
+            new Date() - lastRoationTime
           );
           setRPM(e.rotationRate.gamma, player);
           lastRoationTime = new Date();
