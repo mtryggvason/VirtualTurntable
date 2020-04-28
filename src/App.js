@@ -58,22 +58,21 @@ const setRPM = (gamma, player) => {
 const updateOffset = (gamma, offset, timeSinceLastUpdate) => {
   const rpm = Math.round((gamma * 60) / 360);
   const playbackRate = Math.abs(rpm / 45);
-  return offset + (playbackRate * timeSinceLastUpdate) / 60000;
+  return offset + (playbackRate * timeSinceLastUpdate) / 1000;
 };
 
 let offset = 0;
 let lastRoationTime = 0;
 function App() {
-  const [player, setPlayer] = useState(false);
+  const [player, setPlayer] = useState({});
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    //setShowMessage(!window.DeviceOrientationEvent || !isMobile);
+    setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
 
   const activateListener = async () => {
-    player.playbackRate = 1;
     setPlaying(true);
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
@@ -82,10 +81,23 @@ function App() {
       if (response === "granted") {
         player.start();
         noSleep.enable();
-        player.playbackRate = 0;
+        //player.playbackRate = 0;
         setPlaying(true);
         player.context.updateInterval = 0.01;
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
+        lastRoationTime = new Date();
+        /*
+        setInterval(() => {
+          if (player.playbackRate) {
+            offset = updateOffset(
+              player.playbackRate,
+              offset,
+              new Date() - lastRoationTime
+            );
+            lastRoationTime = new Date();
+          }
+        }, 100);
+        */
         stream.subscribe((e) => {
           offset = updateOffset(
             e.rotationRate.gamma,
@@ -99,10 +111,17 @@ function App() {
     }
   };
 
-  /*
   const devTools = (
     <>
-      <button onClick={reverse}>REVERSE </button>
+      <button
+        onClick={() => {
+          player.reverse = !player.reverse;
+          offset = player.buffer.duration - offset;
+          player.start(0, offset);
+        }}
+      >
+        REVERSE
+      </button>
       <input
         onChange={(event) => (player.playbackRate = event.target.value)}
         step="0.05"
@@ -115,7 +134,6 @@ function App() {
       )
     </>
   );
-*/
   return (
     <div className="app">
       <PlayerComponent
@@ -151,9 +169,10 @@ function App() {
           Turn of silent mode and rotate the phone to hear the song play
         </div>
       )}
+      {devTools}
       {showMessage && (
         <div className="center message">
-          Looks like your device does not support the{" "}
+          Looks like your device does not support the
           <a href="https://caniuse.com/#feat=deviceorientation">
             Device Motion event
           </a>
@@ -179,7 +198,7 @@ const PlayerComponent = (props) => {
       url: props.url,
       loop: props.loop,
     }).toMaster();
-  }, [props]);
+  }, []);
   return null;
 };
 
