@@ -81,7 +81,7 @@ function App() {
       if (response === "granted") {
         player.start();
         noSleep.enable();
-        //player.playbackRate = 0;
+        player.playbackRate = 0;
         setPlaying(true);
         player.context.updateInterval = 0.01;
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
