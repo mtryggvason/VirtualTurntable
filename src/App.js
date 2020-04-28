@@ -52,6 +52,7 @@ const setRPM = (gamma, player) => {
     player.reverse = rpm > 0;
     if (reverse !== player.reverse) {
       offset = player.buffer.duration - offset;
+      console.log(offset);
       player.restart(0, offset);
     }
   }
@@ -143,6 +144,7 @@ function App() {
         url="./Midday.[mp3|ogg]"
         onload={(p) => {
           if (!player.start) {
+            console.log("SET PLAYER");
             setPlayer(p);
           }
         }}
