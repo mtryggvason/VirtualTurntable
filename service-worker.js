@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/VirtualTurntable/precache-manifest.1a3a1f79d24a958190caf22ae2ce0f87.js"
+  "/VirtualTurntable/precache-manifest.d588b91ea9c98de83a29268972f72e1b.js"
 );
 
 self.addEventListener('message', (event) => {
