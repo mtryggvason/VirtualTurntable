@@ -161,7 +161,7 @@ function App() {
           width={350}
         />
       )}
-      {player && !playing && (
+      {player.start && !playing && (
         <button className="center" onClick={activateListener}>
           Get Started
         </button>
