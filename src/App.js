@@ -143,7 +143,7 @@ function App() {
         url="./Midday.[mp3|ogg]"
         onload={(p) => {
           if (!player.start) {
-            setPlayer(player);
+            setPlayer(p);
           }
         }}
         loop
@@ -193,7 +193,6 @@ const PlayerComponent = (props) => {
   useEffect(() => {
     const player = new Player({
       onload: () => {
-        console.log("Here");
         for (var i = 0; i < player._buffer.numberOfChannels; i++) {
           const buffer = player._buffer.getChannelData(i);
           buffers.push(buffer.slice());
