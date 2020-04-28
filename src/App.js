@@ -152,7 +152,7 @@ function App() {
         src="man.jpg"
       />
       <div className="vinyl-dot center" />
-      {!player && (
+      {!player.start && (
         <Loader
           type="Puff"
           className="center"
