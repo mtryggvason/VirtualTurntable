@@ -43,7 +43,7 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    if (playbackRate > 0.05) {
+    if (playbackRate > 0.1) {
       player.playbackRate = playbackRate;
     } else {
       player.playbackRate = 0;
@@ -141,8 +141,10 @@ function App() {
     <div className="app">
       <PlayerComponent
         url="./Midday.[mp3|ogg]"
-        onload={(player) => {
-          setPlayer(player);
+        onload={(p) => {
+          if (!player.start) {
+            setPlayer(player);
+          }
         }}
         loop
       />
@@ -191,6 +193,7 @@ const PlayerComponent = (props) => {
   useEffect(() => {
     const player = new Player({
       onload: () => {
+        console.log("Here");
         for (var i = 0; i < player._buffer.numberOfChannels; i++) {
           const buffer = player._buffer.getChannelData(i);
           buffers.push(buffer.slice());
