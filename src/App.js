@@ -50,19 +50,26 @@ const setRPM = (gamma, player) => {
     }
     player.reverse = rpm > 0;
     if (player.reverse) {
-      const offset = player.buffer.toSeconds();
+      offset = player.buffer.duration() - offset;
       player.start(offset);
     }
   }
 };
+const updateOffset = (gamma, offset, timeSinceLastUpdate) => {
+  const rpm = Math.round((gamma * 60) / 360);
+  const playbackRate = Math.abs(rpm / 45);
+  return offset + (playbackRate * timeSinceLastUpdate) / 60000;
+};
 
+let offset = 0;
+let lastRoationTime = 0;
 function App() {
   const [player, setPlayer] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    setShowMessage(!window.DeviceOrientationEvent || !isMobile);
+    //setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
 
   const activateListener = async () => {
@@ -72,14 +79,22 @@ function App() {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      if (response === "granted" && isMobile) {
+      if (response === "granted") {
         player.start();
         noSleep.enable();
         player.playbackRate = 0;
         setPlaying(true);
         player.context.updateInterval = 0.01;
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
-        stream.subscribe((e) => setRPM(e.rotationRate.gamma, player));
+        stream.subscribe((e) => {
+          offset = updateOffset(
+            e.rotationRate.gamma,
+            offset,
+            lastRoationTime - new Date()
+          );
+          setRPM(e.rotationRate.gamma, player);
+          lastRoationTime = new Date();
+        });
       }
     }
   };
