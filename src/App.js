@@ -51,9 +51,8 @@ const setRPM = (gamma, player) => {
     const reverse = player.reverse;
     player.reverse = rpm > 0;
     if (reverse !== player.reverse) {
-      console.log("Offset before ", offset);
       offset = player.buffer.duration - offset;
-      console.log("Offset after ", offset);
+      offset = Math.min(Math.max(offset, player.buffer.duration), 0);
       player.restart(0, offset);
     }
   }
@@ -61,6 +60,7 @@ const setRPM = (gamma, player) => {
 const updateOffset = (gamma, offset, timeSinceLastUpdate) => {
   const rpm = Math.round((gamma * 60) / 360);
   const playbackRate = Math.abs(rpm / 45);
+  console.log(offset);
   return offset + (playbackRate * timeSinceLastUpdate) / 1000;
 };
 
