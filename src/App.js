@@ -52,7 +52,7 @@ const setRPM = (gamma, player) => {
     player.reverse = rpm > 0;
     if (reverse !== player.reverse) {
       offset = player.buffer.duration - offset;
-      player.start(0, offset);
+      player.restart(0, offset);
     }
   }
 };
