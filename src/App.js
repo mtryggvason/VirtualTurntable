@@ -53,17 +53,16 @@ const setRPM = (gamma, player) => {
     if (reverse !== player.reverse) {
       console.log("REWIND");
       offset = player.buffer.duration - offset;
-      offset = Math.min(Math.max(offset, player.buffer.duration), 0);
-      player.stop().start(0, offset);
+      offset = Math.max(Math.min(offset, player.buffer.duration), 0);
+      player.start(0, offset);
     }
   }
 };
-const updateOffset = (gamma, offset, timeSinceLastUpdate) => {
+const updateOffset = (gamma, offset, timeSinceLastUpdate, minValue, maxValue) => {
   const rpm = Math.round((gamma * 60) / 360);
   const playbackRate = Math.abs(rpm / 45);
-  console.log(offset);
-  console.log(timeSinceLastUpdate);
-  return offset + (playbackRate * timeSinceLastUpdate) / 1000;
+  const tmp = offset + (playbackRate * timeSinceLastUpdate) / 1000;
+  return Math.max(Math.min(tmp, maxValue), minValue);
 };
 
 let offset = 0;
@@ -108,7 +107,9 @@ function App() {
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
-            new Date() - lastRoationTime
+            new Date() - lastRoationTime,
+            0,
+            player.buffer.duration 
           );
           setRPM(e.rotationRate.gamma, player);
           lastRoationTime = new Date();
