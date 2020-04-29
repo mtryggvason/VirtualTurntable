@@ -54,7 +54,7 @@ const setRPM = (gamma, player) => {
       console.log("REWIND");
       offset = player.buffer.duration - offset;
       offset = Math.min(Math.max(offset, player.buffer.duration), 0);
-      player.restart(0, offset);
+      player.stop().start(0, offset);
     }
   }
 };
