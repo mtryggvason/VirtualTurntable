@@ -7,6 +7,7 @@ import { Player, Buffer } from "tone";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ReactComponent as Rotate } from "./svgs/rotate.svg";
+import "./fonts.css"
 import "./App.css";
 import NoSleep from "nosleep.js";
 
@@ -58,7 +59,13 @@ const setRPM = (gamma, player) => {
     }
   }
 };
-const updateOffset = (gamma, offset, timeSinceLastUpdate, minValue, maxValue) => {
+const updateOffset = (
+  gamma,
+  offset,
+  timeSinceLastUpdate,
+  minValue,
+  maxValue
+) => {
   const rpm = Math.round((gamma * 60) / 360);
   const playbackRate = Math.abs(rpm / 45);
   const tmp = offset + (playbackRate * timeSinceLastUpdate) / 1000;
@@ -85,31 +92,19 @@ function App() {
         : "granted";
       if (response === "granted") {
         player.start();
-        noSleep.enable();
         player.playbackRate = 0;
+        noSleep.enable();
         setPlaying(true);
         player.context.updateInterval = 0.01;
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         lastRoationTime = new Date();
-        /*
-        setInterval(() => {
-          if (player.playbackRate) {
-            offset = updateOffset(
-              player.playbackRate,
-              offset,
-              new Date() - lastRoationTime
-            );
-            lastRoationTime = new Date();
-          }
-        }, 100);
-        */
         stream.subscribe((e) => {
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
             new Date() - lastRoationTime,
             0,
-            player.buffer.duration 
+            player.buffer.duration
           );
           setRPM(e.rotationRate.gamma, player);
           lastRoationTime = new Date();
@@ -117,7 +112,7 @@ function App() {
       }
     }
   };
-
+  /*
   const devTools = (
     <>
       <button
@@ -141,6 +136,7 @@ function App() {
       )
     </>
   );
+  */
   return (
     <div className="app">
       <PlayerComponent
@@ -153,6 +149,10 @@ function App() {
         }}
         loop
       />
+      <div className="title-wrapper">
+        <span className="playing-title ">Now Playing</span>
+        <div className="track-title">Midday</div>
+      </div>
       <img
         alt="vinyl"
         className={`vinyl-image center ${player ? "" : "loading"}`}
@@ -176,20 +176,22 @@ function App() {
       {playing && (
         <div className="center message">
           <Rotate className="rotate rotating-svg"></Rotate>
-          Turn of silent mode and rotate the phone to hear the song play
+          Turn off silent mode and rotate the phone to hear the song play
         </div>
       )}
-      {devTools}
       {showMessage && (
         <div className="center message">
-          Looks like your device does not support the
-          <a href="https://caniuse.com/#feat=deviceorientation">
+          Looks like your device does not support the 
+          <a style={{marginLeft: '5px'}} href="https://caniuse.com/#feat=deviceorientation">
             Device Motion event
           </a>
           . <br />
           Please try again with a mobile device
         </div>
       )}
+        <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
+          Buy on <img className="buy-wrapper-image" alt="bandcamp" src="/bandcamp-logotype-light-512.png" />
+        </a>
     </div>
   );
 }
