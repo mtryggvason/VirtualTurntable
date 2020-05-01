@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: 'akzidenzgrotesk-boldextended';
-    src: url('/fonts/akzidenzgrotesk-boldextended-webfont.woff2') format('woff2'),
-         url('/fonts/akzidenzgrotesk-boldextended-webfont.woff') format('woff');
+    src: url('fonts/akzidenzgrotesk-boldextended-webfont.woff2') format('woff2'),
+         url('fonts/akzidenzgrotesk-boldextended-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -11,8 +11,8 @@
 
 @font-face {
     font-family: 'akzidenzgrotesk-extended';
-    src: url('/fonts/akzidenzgrotesk-extended-webfont.woff2') format('woff2'),
-         url('/fonts/akzidenzgrotesk-extended-webfont.woff') format('woff');
+    src: url('fonts/akzidenzgrotesk-extended-webfont.woff2') format('woff2'),
+         url('fonts/akzidenzgrotesk-extended-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -20,8 +20,8 @@
 
 @font-face {
     font-family: 'akzidenzgrotesk-mediumextended';
-    src: url('/fonts/akzidenzgrotesk-mediumextended-webfont.woff2') format('woff2'),
-         url('/fonts/akzidenzgrotesk-mediumextended-webfont.woff') format('woff');
+    src: url('fonts/akzidenzgrotesk-mediumextended-webfont.woff2') format('woff2'),
+         url('fonts/akzidenzgrotesk-mediumextended-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }

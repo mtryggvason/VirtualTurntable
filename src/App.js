@@ -190,7 +190,7 @@ function App() {
         </div>
       )}
         <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
-          Buy on <img className="buy-wrapper-image" alt="bandcamp" src="/bandcamp-logotype-light-512.png" />
+          Buy on <img className="buy-wrapper-image" alt="bandcamp" src="bandcamp-logotype-light-512.png" />
         </a>
     </div>
   );
