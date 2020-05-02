@@ -78,6 +78,7 @@ function App() {
   const [player, setPlayer] = useState({});
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [showRotatingMessage, setShowRotatingMessage] = useState(false);
 
   useEffect(() => {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
@@ -95,6 +96,7 @@ function App() {
         player.playbackRate = 0;
         noSleep.enable();
         setPlaying(true);
+        setShowRotatingMessage(true);
         player.context.updateInterval = 0.01;
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         lastRoationTime = new Date();
@@ -153,9 +155,10 @@ function App() {
         <span className="playing-title ">Now Playing</span>
         <div className="track-title">Midday</div>
       </div>
+      <div className="vinyl-wrapper">
       <img
         alt="vinyl"
-        className={`vinyl-image center ${player ? "" : "loading"}`}
+        className={`vinyl-image  ${player ? "" : "loading"}`}
         src="man.jpg"
       />
       <div className="vinyl-dot center" />
@@ -173,14 +176,15 @@ function App() {
           Get Started
         </button>
       )}
-      {playing && (
-        <div className="center message">
+      {playing && showRotatingMessage && (
+        <div className="message center">
+            <img onClick={() => setShowRotatingMessage(false)}className="message-close" src="close.png"></img>
           <Rotate className="rotate rotating-svg"></Rotate>
           Turn off silent mode and rotate the phone to hear the song play
         </div>
       )}
       {showMessage && (
-        <div className="center message">
+        <div className="message">
           Looks like your device does not support the 
           <a style={{marginLeft: '5px'}} href="https://caniuse.com/#feat=deviceorientation">
             Device Motion event
@@ -189,6 +193,7 @@ function App() {
           Please try again with a mobile device
         </div>
       )}
+      </div>
         <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
           Buy on <img className="buy-wrapper-image" alt="bandcamp" src="bandcamp-logotype-light-512.png" />
         </a>
