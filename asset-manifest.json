@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/VirtualTurntable/static/css/main.f702b22b.chunk.css",
-    "main.js": "/VirtualTurntable/static/js/main.6fa70bb7.chunk.js",
-    "main.js.map": "/VirtualTurntable/static/js/main.6fa70bb7.chunk.js.map",
+    "main.css": "/VirtualTurntable/static/css/main.9d14605d.chunk.css",
+    "main.js": "/VirtualTurntable/static/js/main.ea27ca38.chunk.js",
+    "main.js.map": "/VirtualTurntable/static/js/main.ea27ca38.chunk.js.map",
     "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js",
     "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js.map",
     "static/css/2.f5298653.chunk.css": "/VirtualTurntable/static/css/2.f5298653.chunk.css",
-    "static/js/2.3b0a44d4.chunk.js": "/VirtualTurntable/static/js/2.3b0a44d4.chunk.js",
-    "static/js/2.3b0a44d4.chunk.js.map": "/VirtualTurntable/static/js/2.3b0a44d4.chunk.js.map",
+    "static/js/2.d981a3e2.chunk.js": "/VirtualTurntable/static/js/2.d981a3e2.chunk.js",
+    "static/js/2.d981a3e2.chunk.js.map": "/VirtualTurntable/static/js/2.d981a3e2.chunk.js.map",
     "index.html": "/VirtualTurntable/index.html",
-    "precache-manifest.771f6b03b249ec4d3a2115369d21bf1c.js": "/VirtualTurntable/precache-manifest.771f6b03b249ec4d3a2115369d21bf1c.js",
+    "precache-manifest.9fa396231d64b5a6a34f4e079954842a.js": "/VirtualTurntable/precache-manifest.9fa396231d64b5a6a34f4e079954842a.js",
     "service-worker.js": "/VirtualTurntable/service-worker.js",
     "static/css/2.f5298653.chunk.css.map": "/VirtualTurntable/static/css/2.f5298653.chunk.css.map",
-    "static/css/main.f702b22b.chunk.css.map": "/VirtualTurntable/static/css/main.f702b22b.chunk.css.map",
-    "static/js/2.3b0a44d4.chunk.js.LICENSE": "/VirtualTurntable/static/js/2.3b0a44d4.chunk.js.LICENSE",
+    "static/css/main.9d14605d.chunk.css.map": "/VirtualTurntable/static/css/main.9d14605d.chunk.css.map",
+    "static/js/2.d981a3e2.chunk.js.LICENSE": "/VirtualTurntable/static/js/2.d981a3e2.chunk.js.LICENSE",
     "static/media/fonts.css": "/VirtualTurntable/static/media/akzidenzgrotesk-mediumextended-webfont.ef193d40.woff",
     "static/media/rotate.b424f259.svg": "/VirtualTurntable/static/media/rotate.b424f259.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.e3292aa0.js",
     "static/css/2.f5298653.chunk.css",
-    "static/js/2.3b0a44d4.chunk.js",
-    "static/css/main.f702b22b.chunk.css",
-    "static/js/main.6fa70bb7.chunk.js"
+    "static/js/2.d981a3e2.chunk.js",
+    "static/css/main.9d14605d.chunk.css",
+    "static/js/main.ea27ca38.chunk.js"
   ]
 }

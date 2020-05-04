@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6f2ffc2bb6546478a3df91ee7c18298b",
+    "revision": "930821f18ff705fb8d52ec8891530ce5",
     "url": "/VirtualTurntable/index.html"
   },
   {
-    "revision": "63ac80360369e27ae8b0",
+    "revision": "b8ec03f58b391990bba2",
     "url": "/VirtualTurntable/static/css/2.f5298653.chunk.css"
   },
   {
-    "revision": "a3695b00dabb0f1a9707",
-    "url": "/VirtualTurntable/static/css/main.f702b22b.chunk.css"
+    "revision": "b7dd8a66d243ed93cf5c",
+    "url": "/VirtualTurntable/static/css/main.9d14605d.chunk.css"
   },
   {
-    "revision": "63ac80360369e27ae8b0",
-    "url": "/VirtualTurntable/static/js/2.3b0a44d4.chunk.js"
+    "revision": "b8ec03f58b391990bba2",
+    "url": "/VirtualTurntable/static/js/2.d981a3e2.chunk.js"
   },
   {
     "revision": "a407e491bd78a1b12dd3562fc67e366e",
-    "url": "/VirtualTurntable/static/js/2.3b0a44d4.chunk.js.LICENSE"
+    "url": "/VirtualTurntable/static/js/2.d981a3e2.chunk.js.LICENSE"
   },
   {
-    "revision": "a3695b00dabb0f1a9707",
-    "url": "/VirtualTurntable/static/js/main.6fa70bb7.chunk.js"
+    "revision": "b7dd8a66d243ed93cf5c",
+    "url": "/VirtualTurntable/static/js/main.ea27ca38.chunk.js"
   },
   {
     "revision": "be81e426bf8a2ae95b56",
