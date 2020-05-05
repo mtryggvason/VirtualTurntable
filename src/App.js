@@ -153,7 +153,7 @@ function App() {
       />
       <div className="title-wrapper">
         <span className="playing-title ">Now Playing</span>
-        <div className="track-title">Midday</div>
+        <div className="track-title">Moff & Tarkin - Powerplay</div>
       </div>
       <div className="vinyl-wrapper">
         <img
