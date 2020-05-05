@@ -7,7 +7,7 @@ import { Player, Buffer } from "tone";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ReactComponent as Rotate } from "./svgs/rotate.svg";
-import "./fonts.css"
+import "./fonts.css";
 import "./App.css";
 import NoSleep from "nosleep.js";
 
@@ -156,47 +156,60 @@ function App() {
         <div className="track-title">Midday</div>
       </div>
       <div className="vinyl-wrapper">
-      <img
-        alt="vinyl"
-        className={`vinyl-image  ${player ? "" : "loading"}`}
-        src="man.jpg"
-      />
-      <div className="vinyl-dot center" />
-      {!player.start && (
-        <Loader
-          type="Puff"
-          className="center"
-          color="#00BFFF"
-          height={350}
-          width={350}
+        <img
+          alt="vinyl"
+          className={`vinyl-image  ${player ? "" : "loading"}`}
+          src="man.jpg"
         />
-      )}
-      {player.start && !playing && (
-        <button className="center" onClick={activateListener}>
-          Get Started
-        </button>
-      )}
-      {playing && showRotatingMessage && (
-        <div className="message center">
-            <img onClick={() => setShowRotatingMessage(false)}className="message-close" src="close.png"></img>
-          <Rotate className="rotate rotating-svg"></Rotate>
-          Turn off silent mode and rotate the phone to hear the song play
-        </div>
-      )}
-      {showMessage && (
-        <div className="message">
-          Looks like your device does not support the 
-          <a style={{marginLeft: '5px'}} href="https://caniuse.com/#feat=deviceorientation">
-            Device Motion event
-          </a>
-          . <br />
-          Please try again with a mobile device
-        </div>
-      )}
+        <div className="vinyl-dot center" />
+        {!player.start && (
+          <Loader
+            type="Puff"
+            className="center"
+            color="#00BFFF"
+            height={300}
+            width={300}
+          />
+        )}
+        {player.start && !playing && (
+          <button className="center" onClick={activateListener}>
+            Get Started
+          </button>
+        )}
+        {playing && showRotatingMessage && (
+          <div className="message center">
+            <img
+              alt="close"
+              onClick={() => setShowRotatingMessage(false)}
+              className="message-close"
+              src="close.png"
+            ></img>
+            <Rotate className="rotate rotating-svg"></Rotate>
+            Turn off silent mode and rotate the phone to hear the song play
+          </div>
+        )}
+        {showMessage && (
+          <div className="message">
+            Looks like your device does not support the
+            <a
+              style={{ marginLeft: "5px" }}
+              href="https://caniuse.com/#feat=deviceorientation"
+            >
+              Device Motion event
+            </a>
+            . <br />
+            Please try again with a mobile device
+          </div>
+        )}
       </div>
-        <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
-          Buy on <img className="buy-wrapper-image" alt="bandcamp" src="bandcamp-logotype-light-512.png" />
-        </a>
+      <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
+        Buy on{" "}
+        <img
+          className="buy-wrapper-image"
+          alt="bandcamp"
+          src="bandcamp-logotype-light-512.png"
+        />
+      </a>
     </div>
   );
 }

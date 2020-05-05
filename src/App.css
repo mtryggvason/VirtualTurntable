@@ -7,12 +7,11 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  font-family: 'akzidenzgrotesk-extended';
+  font-family: "akzidenzgrotesk-extended";
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 0;
-
 }
 .vinyl-wrapper {
   position: relative;
@@ -24,8 +23,8 @@
   border-radius: 50%;
   position: absolute;
   max-width: calc(100% - 20px);
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
 }
 .vinyl-image.loading {
@@ -43,7 +42,7 @@
 
 .buy-wrapper {
   display: flex;
-  font-family: 'akzidenzgrotesk-mediumextended';
+  font-family: "akzidenzgrotesk-mediumextended";
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -61,7 +60,7 @@
 
 .playing-title {
   color: white;
-  font-family: 'akzidenzgrotesk-boldextended';
+  font-family: "akzidenzgrotesk-boldextended";
   font-size: 16px;
   line-height: 28px;
   text-align: center;
@@ -69,7 +68,7 @@
 
 .track-title {
   color: white;
-  font-family: 'akzidenzgrotesk-mediumextended';
+  font-family: "akzidenzgrotesk-mediumextended";
   font-size: 16px;
   line-height: 28px;
   text-align: center;
@@ -94,9 +93,9 @@
 }
 
 .message-close {
-      position: absolute;
-    right: 10px;
-    top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .center {
