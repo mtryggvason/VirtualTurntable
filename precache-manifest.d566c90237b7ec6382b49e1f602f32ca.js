@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "810edde6621e7b9b9587820c9f1dc073",
+    "revision": "ccd7869ad79e0d210a4b90a4e6a38146",
     "url": "/VirtualTurntable/index.html"
   },
   {
