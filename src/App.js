@@ -91,7 +91,7 @@ function App() {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      if (response === "granted" || (response.result  && response.result=== "granted") {
+      if (response === "granted" || (response.result  && response.result=== "granted")) {
         player.start();
         player.playbackRate = 0;
         noSleep.enable();
