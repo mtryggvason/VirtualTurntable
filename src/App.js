@@ -85,13 +85,14 @@ function App() {
   }, []);
 
   const activateListener = async () => {
-
+    debugger
     if (window.DeviceOrientationEvent) {
+      debugger
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      debugger
       if (response === "granted" || (response.result && response.result=== "granted")) {
+        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         player.playbackRate = 1;
         setPlaying(true);
         player.start();
@@ -101,9 +102,7 @@ function App() {
         setShowRotatingMessage(true);
         player.context.updateInterval = 0.01;
         lastRoationTime = new Date();
-        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         stream.subscribe((e) => {
-          debugger
           player.start();
           offset = updateOffset(
             e.rotationRate.gamma,
