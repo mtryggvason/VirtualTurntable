@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/VirtualTurntable/static/css/main.5bd0bcf4.chunk.css",
-    "main.js": "/VirtualTurntable/static/js/main.74b408a8.chunk.js",
-    "main.js.map": "/VirtualTurntable/static/js/main.74b408a8.chunk.js.map",
+    "main.js": "/VirtualTurntable/static/js/main.5b999ecb.chunk.js",
+    "main.js.map": "/VirtualTurntable/static/js/main.5b999ecb.chunk.js.map",
     "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js",
     "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js.map",
     "static/css/2.f5298653.chunk.css": "/VirtualTurntable/static/css/2.f5298653.chunk.css",
     "static/js/2.df6e57c8.chunk.js": "/VirtualTurntable/static/js/2.df6e57c8.chunk.js",
     "static/js/2.df6e57c8.chunk.js.map": "/VirtualTurntable/static/js/2.df6e57c8.chunk.js.map",
     "index.html": "/VirtualTurntable/index.html",
-    "precache-manifest.c5d2eebb38e4f17c3ac7039efa12a120.js": "/VirtualTurntable/precache-manifest.c5d2eebb38e4f17c3ac7039efa12a120.js",
+    "precache-manifest.b69512e4fdc2ecd0f9bcd4a479791808.js": "/VirtualTurntable/precache-manifest.b69512e4fdc2ecd0f9bcd4a479791808.js",
     "service-worker.js": "/VirtualTurntable/service-worker.js",
     "static/css/2.f5298653.chunk.css.map": "/VirtualTurntable/static/css/2.f5298653.chunk.css.map",
     "static/css/main.5bd0bcf4.chunk.css.map": "/VirtualTurntable/static/css/main.5bd0bcf4.chunk.css.map",
@@ -22,6 +22,6 @@
     "static/css/2.f5298653.chunk.css",
     "static/js/2.df6e57c8.chunk.js",
     "static/css/main.5bd0bcf4.chunk.css",
-    "static/js/main.74b408a8.chunk.js"
+    "static/js/main.5b999ecb.chunk.js"
   ]
 }
