@@ -85,14 +85,15 @@ function App() {
   }, []);
 
   const activateListener = async () => {
-    player.playbackRate = 1;
-    setPlaying(true);
+
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
       debugger
       if (response === "granted" || (response.result && response.result=== "granted")) {
+        player.playbackRate = 1;
+        setPlaying(true);
         player.start();
         player.playbackRate = 0;
         noSleep.enable();
