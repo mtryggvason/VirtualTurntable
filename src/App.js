@@ -91,16 +91,19 @@ function App() {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      if (response === "granted" || (response.result  && response.result=== "granted")) {
+      debugger
+      if (response === "granted" || (response.result && response.result=== "granted")) {
         player.start();
         player.playbackRate = 0;
         noSleep.enable();
         setPlaying(true);
         setShowRotatingMessage(true);
         player.context.updateInterval = 0.01;
-        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         lastRoationTime = new Date();
+        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
         stream.subscribe((e) => {
+          debugger
+          player.start();
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
