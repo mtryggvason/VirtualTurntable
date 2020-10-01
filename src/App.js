@@ -111,31 +111,6 @@ function App() {
       }
     }
   };
-  /*
-  const devTools = (
-    <>
-      <button
-        onClick={() => {
-          player.reverse = !player.reverse;
-          offset = player.buffer.duration - offset;
-          player.start(0, offset);
-        }}
-      >
-        REVERSE
-      </button>
-      <input
-        onChange={(event) => (player.playbackRate = event.target.value)}
-        step="0.05"
-        type="range"
-        min="0"
-        max="1"
-        class="slider"
-        id="myRange"
-      />
-      )
-    </>
-  );
-  */
   return (
     <div className="app">
       <PlayerComponent
@@ -161,12 +136,12 @@ function App() {
         <div className="vinyl-dot center" />
         {!player.start && (
           <Loader
-            type="Puff"
-            className="center"
-            color="#00BFFF"
-            height={300}
-            width={300}
-          />
+          type="Audio"
+          className="center"
+          color="#00BFFF"
+          height={100}
+          width={100}
+        />
         )}
         {player.start && !playing && (
           <button className="center" onClick={activateListener}>
