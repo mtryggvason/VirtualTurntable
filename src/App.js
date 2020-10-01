@@ -44,6 +44,7 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
+    console.log(playbackRate)
     if (playbackRate > 0.1) {
       player.playbackRate = playbackRate;
     } else {
@@ -52,7 +53,6 @@ const setRPM = (gamma, player) => {
     const reverse = player.reverse;
     player.reverse = rpm > 0;
     if (reverse !== player.reverse) {
-      console.log("REWIND");
       offset = player.buffer.duration - offset;
       offset = Math.max(Math.min(offset, player.buffer.duration), 0);
       player.start(0, offset);
@@ -85,25 +85,19 @@ function App() {
   }, []);
 
   const activateListener = async () => {
-    debugger
+    player.start();
+    player.playbackRate = 0;
     if (window.DeviceOrientationEvent) {
-      debugger
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
       if (response === "granted" || (response.result && response.result=== "granted")) {
-        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(5));
-        player.playbackRate = 1;
-        setPlaying(true);
-        player.start();
-        player.playbackRate = 0;
+        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(10));
         noSleep.enable();
         setPlaying(true);
         setShowRotatingMessage(true);
-        player.context.updateInterval = 0.01;
         lastRoationTime = new Date();
         stream.subscribe((e) => {
-          player.start();
           offset = updateOffset(
             e.rotationRate.gamma,
             offset,
