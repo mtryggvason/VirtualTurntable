@@ -44,7 +44,7 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    console.log(playbackRate)
+    console.log(playbackRate);
     if (playbackRate > 0.1) {
       player.playbackRate = playbackRate;
     } else {
@@ -91,7 +91,10 @@ function App() {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
         : "granted";
-      if (response === "granted" || (response.result && response.result=== "granted")) {
+      if (
+        response === "granted" ||
+        (response.result && response.result === "granted")
+      ) {
         const stream = fromEvent(window, "devicemotion").pipe(throttleTime(10));
         noSleep.enable();
         setPlaying(true);
@@ -136,12 +139,12 @@ function App() {
         <div className="vinyl-dot center" />
         {!player.start && (
           <Loader
-          type="Audio"
-          className="center"
-          color="#00BFFF"
-          height={100}
-          width={100}
-        />
+            type="Audio"
+            className="center"
+            color="#00BFFF"
+            height={100}
+            width={100}
+          />
         )}
         {player.start && !playing && (
           <button className="center" onClick={activateListener}>
@@ -157,7 +160,7 @@ function App() {
               src="close.png"
             ></img>
             <Rotate className="rotate rotating-svg"></Rotate>
-            Turn off silent mode and rotate the phone to hear the song play
+            Turn off silent mode and spin the phone to hear the song play
           </div>
         )}
         {showMessage && (
