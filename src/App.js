@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { fromEvent } from "rxjs";
 import { throttleTime } from "rxjs/operators";
-
+import Artwork from './ticket_to_tene.png'
+import Bandcamp from './bandcamp.png'
 import { isMobile } from "react-device-detect";
 import { Player, Buffer } from "tone";
 import Loader from "react-loader-spinner";
@@ -133,7 +134,7 @@ function App() {
         <img
           alt="vinyl"
           className={`vinyl-image  ${player ? "" : "loading"}`}
-          src="/ticket_to_tene.png"
+          src={Artwork}
         />
         <div className="vinyl-dot center" />
         {!player.start && (
@@ -181,7 +182,7 @@ function App() {
         <img
           className="buy-wrapper-image"
           alt="bandcamp"
-          src="bandcamp-logotype-light-512.png"
+          src={Bandcamp}
         />
       </a>
     </div>
@@ -202,7 +203,7 @@ const PlayerComponent = (props) => {
       url: props.url,
       loop: props.loop,
     }).toDestination();
-  }, []);
+  }, [props]);
   return null;
 };
 
