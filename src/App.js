@@ -117,10 +117,9 @@ function App() {
   return (
     <div className="app">
       <PlayerComponent
-        url="./Midday.[mp3|ogg]"
+        url="./socks.mp3"
         onload={(p) => {
           if (!player.start) {
-            console.log("SET PLAYER");
             setPlayer(p);
           }
         }}
@@ -128,13 +127,13 @@ function App() {
       />
       <div className="title-wrapper">
         <span className="playing-title ">Now Playing</span>
-        <div className="track-title">Moff & Tarkin - Powerplay</div>
+        <div className="track-title">Moff & Tarkin - Socks by the Sofa</div>
       </div>
       <div className="vinyl-wrapper">
         <img
           alt="vinyl"
           className={`vinyl-image  ${player ? "" : "loading"}`}
-          src="man.jpg"
+          src="/ticket_to_tene.png"
         />
         <div className="vinyl-dot center" />
         {!player.start && (
