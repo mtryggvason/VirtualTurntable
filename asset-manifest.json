@@ -1,27 +1,29 @@
 {
   "files": {
     "main.css": "/VirtualTurntable/static/css/main.a2cdda39.chunk.css",
-    "main.js": "/VirtualTurntable/static/js/main.48a662cd.chunk.js",
-    "main.js.map": "/VirtualTurntable/static/js/main.48a662cd.chunk.js.map",
+    "main.js": "/VirtualTurntable/static/js/main.f8f8a5f4.chunk.js",
+    "main.js.map": "/VirtualTurntable/static/js/main.f8f8a5f4.chunk.js.map",
     "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.a8fbbaea.js",
     "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.a8fbbaea.js.map",
     "static/css/2.f87e9f44.chunk.css": "/VirtualTurntable/static/css/2.f87e9f44.chunk.css",
-    "static/js/2.729721bf.chunk.js": "/VirtualTurntable/static/js/2.729721bf.chunk.js",
-    "static/js/2.729721bf.chunk.js.map": "/VirtualTurntable/static/js/2.729721bf.chunk.js.map",
+    "static/js/2.b3526699.chunk.js": "/VirtualTurntable/static/js/2.b3526699.chunk.js",
+    "static/js/2.b3526699.chunk.js.map": "/VirtualTurntable/static/js/2.b3526699.chunk.js.map",
     "index.html": "/VirtualTurntable/index.html",
-    "precache-manifest.68096c04397fac0d444c4b829d7c0e9d.js": "/VirtualTurntable/precache-manifest.68096c04397fac0d444c4b829d7c0e9d.js",
+    "precache-manifest.97402c03f0e96d398af697ac24b2da4f.js": "/VirtualTurntable/precache-manifest.97402c03f0e96d398af697ac24b2da4f.js",
     "service-worker.js": "/VirtualTurntable/service-worker.js",
     "static/css/2.f87e9f44.chunk.css.map": "/VirtualTurntable/static/css/2.f87e9f44.chunk.css.map",
     "static/css/main.a2cdda39.chunk.css.map": "/VirtualTurntable/static/css/main.a2cdda39.chunk.css.map",
-    "static/js/2.729721bf.chunk.js.LICENSE.txt": "/VirtualTurntable/static/js/2.729721bf.chunk.js.LICENSE.txt",
+    "static/js/2.b3526699.chunk.js.LICENSE.txt": "/VirtualTurntable/static/js/2.b3526699.chunk.js.LICENSE.txt",
     "static/media/fonts.css": "/VirtualTurntable/static/media/akzidenzgrotesk-mediumextended-webfont.ef193d40.woff",
-    "static/media/rotate.b424f259.svg": "/VirtualTurntable/static/media/rotate.b424f259.svg"
+    "static/media/bandcamp.png": "/VirtualTurntable/static/media/bandcamp.a37708ba.png",
+    "static/media/rotate.b424f259.svg": "/VirtualTurntable/static/media/rotate.b424f259.svg",
+    "static/media/ticket_to_tene.png": "/VirtualTurntable/static/media/ticket_to_tene.16b8560c.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a8fbbaea.js",
     "static/css/2.f87e9f44.chunk.css",
-    "static/js/2.729721bf.chunk.js",
+    "static/js/2.b3526699.chunk.js",
     "static/css/main.a2cdda39.chunk.css",
-    "static/js/main.48a662cd.chunk.js"
+    "static/js/main.f8f8a5f4.chunk.js"
   ]
 }

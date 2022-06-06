@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f935cd804d343e333160e1ee186882a3",
+    "revision": "d790df7d3be16c5e65516f109eacfad5",
     "url": "/VirtualTurntable/index.html"
   },
   {
-    "revision": "94810b1d97c044b779ce",
+    "revision": "3ba653b7cb2bacae4192",
     "url": "/VirtualTurntable/static/css/2.f87e9f44.chunk.css"
   },
   {
-    "revision": "012d4bbb7348c9930358",
+    "revision": "ff32d08e5bd0e6d722c9",
     "url": "/VirtualTurntable/static/css/main.a2cdda39.chunk.css"
   },
   {
-    "revision": "94810b1d97c044b779ce",
-    "url": "/VirtualTurntable/static/js/2.729721bf.chunk.js"
+    "revision": "3ba653b7cb2bacae4192",
+    "url": "/VirtualTurntable/static/js/2.b3526699.chunk.js"
   },
   {
     "revision": "ea6f3d510d9318e33f573690eddd4612",
-    "url": "/VirtualTurntable/static/js/2.729721bf.chunk.js.LICENSE.txt"
+    "url": "/VirtualTurntable/static/js/2.b3526699.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "012d4bbb7348c9930358",
-    "url": "/VirtualTurntable/static/js/main.48a662cd.chunk.js"
+    "revision": "ff32d08e5bd0e6d722c9",
+    "url": "/VirtualTurntable/static/js/main.f8f8a5f4.chunk.js"
   },
   {
     "revision": "3d1a61a97374b5cac071",
@@ -52,7 +52,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/VirtualTurntable/static/media/akzidenzgrotesk-mediumextended-webfont.ef193d40.woff"
   },
   {
+    "revision": "a37708ba52e889ded14b445d265c0029",
+    "url": "/VirtualTurntable/static/media/bandcamp.a37708ba.png"
+  },
+  {
     "revision": "b424f259f0d71a06d6b2380b55f85e3f",
     "url": "/VirtualTurntable/static/media/rotate.b424f259.svg"
+  },
+  {
+    "revision": "16b8560cd1d1d751894efc5a5735de11",
+    "url": "/VirtualTurntable/static/media/ticket_to_tene.16b8560c.png"
   }
 ]);
