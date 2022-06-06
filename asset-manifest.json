@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/VirtualTurntable/static/css/main.5bd0bcf4.chunk.css",
-    "main.js": "/VirtualTurntable/static/js/main.f8d03cac.chunk.js",
-    "main.js.map": "/VirtualTurntable/static/js/main.f8d03cac.chunk.js.map",
-    "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js",
-    "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.e3292aa0.js.map",
-    "static/css/2.f5298653.chunk.css": "/VirtualTurntable/static/css/2.f5298653.chunk.css",
-    "static/js/2.683cde57.chunk.js": "/VirtualTurntable/static/js/2.683cde57.chunk.js",
-    "static/js/2.683cde57.chunk.js.map": "/VirtualTurntable/static/js/2.683cde57.chunk.js.map",
+    "main.css": "/VirtualTurntable/static/css/main.a2cdda39.chunk.css",
+    "main.js": "/VirtualTurntable/static/js/main.48a662cd.chunk.js",
+    "main.js.map": "/VirtualTurntable/static/js/main.48a662cd.chunk.js.map",
+    "runtime-main.js": "/VirtualTurntable/static/js/runtime-main.a8fbbaea.js",
+    "runtime-main.js.map": "/VirtualTurntable/static/js/runtime-main.a8fbbaea.js.map",
+    "static/css/2.f87e9f44.chunk.css": "/VirtualTurntable/static/css/2.f87e9f44.chunk.css",
+    "static/js/2.729721bf.chunk.js": "/VirtualTurntable/static/js/2.729721bf.chunk.js",
+    "static/js/2.729721bf.chunk.js.map": "/VirtualTurntable/static/js/2.729721bf.chunk.js.map",
     "index.html": "/VirtualTurntable/index.html",
-    "precache-manifest.d0ca1d8b7658ba8ba1ebdb8df1521435.js": "/VirtualTurntable/precache-manifest.d0ca1d8b7658ba8ba1ebdb8df1521435.js",
+    "precache-manifest.68096c04397fac0d444c4b829d7c0e9d.js": "/VirtualTurntable/precache-manifest.68096c04397fac0d444c4b829d7c0e9d.js",
     "service-worker.js": "/VirtualTurntable/service-worker.js",
-    "static/css/2.f5298653.chunk.css.map": "/VirtualTurntable/static/css/2.f5298653.chunk.css.map",
-    "static/css/main.5bd0bcf4.chunk.css.map": "/VirtualTurntable/static/css/main.5bd0bcf4.chunk.css.map",
-    "static/js/2.683cde57.chunk.js.LICENSE": "/VirtualTurntable/static/js/2.683cde57.chunk.js.LICENSE",
+    "static/css/2.f87e9f44.chunk.css.map": "/VirtualTurntable/static/css/2.f87e9f44.chunk.css.map",
+    "static/css/main.a2cdda39.chunk.css.map": "/VirtualTurntable/static/css/main.a2cdda39.chunk.css.map",
+    "static/js/2.729721bf.chunk.js.LICENSE.txt": "/VirtualTurntable/static/js/2.729721bf.chunk.js.LICENSE.txt",
     "static/media/fonts.css": "/VirtualTurntable/static/media/akzidenzgrotesk-mediumextended-webfont.ef193d40.woff",
     "static/media/rotate.b424f259.svg": "/VirtualTurntable/static/media/rotate.b424f259.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e3292aa0.js",
-    "static/css/2.f5298653.chunk.css",
-    "static/js/2.683cde57.chunk.js",
-    "static/css/main.5bd0bcf4.chunk.css",
-    "static/js/main.f8d03cac.chunk.js"
+    "static/js/runtime-main.a8fbbaea.js",
+    "static/css/2.f87e9f44.chunk.css",
+    "static/js/2.729721bf.chunk.js",
+    "static/css/main.a2cdda39.chunk.css",
+    "static/js/main.48a662cd.chunk.js"
   ]
 }
