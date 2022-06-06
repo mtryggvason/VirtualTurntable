@@ -4,7 +4,7 @@ import { throttleTime } from "rxjs/operators";
 import Artwork from './ticket_to_tene.png'
 import Bandcamp from './bandcamp.png'
 import { isMobile } from "react-device-detect";
-import { Player, Buffer } from "tone";
+import { Player, Buffer, start } from "tone";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { ReactComponent as Rotate } from "./svgs/rotate.svg";
@@ -45,7 +45,6 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    console.log(playbackRate);
     if (playbackRate > 0.1) {
       player.playbackRate = playbackRate;
     } else {
@@ -80,12 +79,13 @@ function App() {
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
-
+  console.log('render');
   useEffect(() => {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
 
   const activateListener = async () => {
+    start();
     player.start();
     player.playbackRate = 0;
     if (window.DeviceOrientationEvent) {
