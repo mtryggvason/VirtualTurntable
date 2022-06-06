@@ -2,8 +2,9 @@
   "name": "VirtualTurntable",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/VirtualTurntable",
+  "homepage": "https://mtryggvason.github.io/VirtualTurntable",
   "dependencies": {
+    "gh-pages": "^4.0.0",
     "nosleep.js": "^0.9.0",
     "react": "^16.12.0",
     "react-device-detect": "^1.11.14",
@@ -16,6 +17,8 @@
     "tone": "14.7.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "react-scripts start",
     "start": "serve -s build",
     "build": "CI=false react-scripts build",
