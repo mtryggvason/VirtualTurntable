@@ -118,7 +118,7 @@ function App() {
   return (
     <div className="app">
       <PlayerComponent
-        url="./socks.mp3"
+        url="./socks.[mp3|ogg]"
         onload={(p) => {
           if (!player.start) {
             setPlayer(p);
