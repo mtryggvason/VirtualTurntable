@@ -71,7 +71,6 @@ function App() {
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
-  console.log('render');
   useEffect(() => {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
