@@ -127,7 +127,7 @@ function App() {
         <img
           alt="vinyl"
           className={`vinyl-image  ${player ? "" : "loading"}`}
-          src={'/ticket_to_tene.png'}
+          src={'./ticket_to_tene.png'}
         />
         <div className="vinyl-dot center" />
         {!player.start && (
@@ -175,7 +175,7 @@ function App() {
         <img
           className="buy-wrapper-image"
           alt="bandcamp"
-          src={'/bandcamp.png'}
+          src={'./bandcamp.png'}
         />
       </a>
     </div>
