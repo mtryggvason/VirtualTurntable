@@ -1,4 +1,5 @@
 * {
+  background-color: black;
   box-sizing: border-box;
 }
 
@@ -127,11 +128,6 @@ button {
   padding: 10px;
 }
 
-.rotate {
-  animation: rotate;
-  animation-iteration-count: infinite;
-  animation-duration: 4s;
-}
 
 .rotating-svg {
   display: block;
