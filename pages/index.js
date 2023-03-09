@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { fromEvent } from "rxjs";
 import { throttleTime } from "rxjs/operators";
-import Artwork from './ticket_to_tene.png'
-import Bandcamp from './bandcamp.png'
 import { isMobile } from "react-device-detect";
 import { Player, Buffer, start } from "tone";
 import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { ReactComponent as Rotate } from "./svgs/rotate.svg";
-import "./fonts.css";
-import "./App.css";
+import Rotate from "../src/svgs/rotate.svg";
+
+import NoSleep from "nosleep.js";
 
 let reversed = false;
 let buffers = [];
@@ -34,10 +31,7 @@ Buffer.prototype._reverse = function () {
   return this;
 };
 
-if (window.location.protocol !== "https:") {
-  /* window.location.href =
-    "https:" + window.location.href.substring(window.location.protocol.length);*/
-}
+
 
 const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
@@ -84,6 +78,8 @@ function App() {
 
   const activateListener = async () => {
     start();
+    const noSleep = new NoSleep();
+
     player.start();
     player.playbackRate = 0;
     if (window.DeviceOrientationEvent) {
@@ -132,7 +128,7 @@ function App() {
         <img
           alt="vinyl"
           className={`vinyl-image  ${player ? "" : "loading"}`}
-          src={Artwork}
+          src={'/ticket_to_tene.png'}
         />
         <div className="vinyl-dot center" />
         {!player.start && (
@@ -180,7 +176,7 @@ function App() {
         <img
           className="buy-wrapper-image"
           alt="bandcamp"
-          src={Bandcamp}
+          src={'/bandcamp.png'}
         />
       </a>
     </div>
