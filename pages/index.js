@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { fromEvent } from "rxjs";
-import { throttleTime } from "rxjs/operators";
 import { isMobile } from "react-device-detect";
-import { Player, Buffer, start } from "tone";
+import { Buffer, start } from "tone";
 import Loader from "react-loader-spinner";
 import Rotate from "../src/svgs/rotate.svg";
+import usePlayer from "../hooks/usePlayer";
 
 import NoSleep from "nosleep.js";
 
@@ -30,8 +29,6 @@ Buffer.prototype._reverse = function () {
   }
   return this;
 };
-
-
 
 const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
@@ -67,10 +64,13 @@ const updateOffset = (
 let offset = 0;
 let lastRoationTime = 0;
 function App() {
-  const [player, setPlayer] = useState({});
   const [playing, setPlaying] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
+
+  const player = usePlayer("./socks.[mp3|ogg]", true, (p) => {
+    // Player loaded callback
+  });
   useEffect(() => {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
@@ -79,8 +79,10 @@ function App() {
     start();
     const noSleep = new NoSleep();
 
-    player.start();
-    player.playbackRate = 0;
+    if (player && player.buffer) {
+      player.start();
+      player.playbackRate = 0;
+    }
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
@@ -89,36 +91,30 @@ function App() {
         response === "granted" ||
         (response.result && response.result === "granted")
       ) {
-        const stream = fromEvent(window, "devicemotion").pipe(throttleTime(10));
+        const handleDeviceMotion = (e) => {
+          if (player && player.buffer) {
+            offset = updateOffset(
+              e.rotationRate.gamma,
+              offset,
+              Date.now() - lastRoationTime,
+              0,
+              player.buffer.duration
+            );
+            setRPM(e.rotationRate.gamma, player);
+            lastRoationTime = Date.now();
+          }
+        };
+
+        window.addEventListener("devicemotion", handleDeviceMotion);
         noSleep.enable();
         setPlaying(true);
         setShowRotatingMessage(true);
-        lastRoationTime = new Date();
-        stream.subscribe((e) => {
-          offset = updateOffset(
-            e.rotationRate.gamma,
-            offset,
-            new Date() - lastRoationTime,
-            0,
-            player.buffer.duration
-          );
-          setRPM(e.rotationRate.gamma, player);
-          lastRoationTime = new Date();
-        });
+        lastRoationTime = Date.now();
       }
     }
   };
   return (
     <div className="app">
-      <PlayerComponent
-        url="./socks.[mp3|ogg]"
-        onload={(p) => {
-          if (!player.start) {
-            setPlayer(p);
-          }
-        }}
-        loop
-      />
       <div className="title-wrapper">
         <span className="playing-title ">Now Playing</span>
         <div className="track-title">Moff & Tarkin - Socks by the Sofa</div>
@@ -127,10 +123,10 @@ function App() {
         <img
           alt="vinyl"
           className={`vinyl-image  ${player ? "" : "loading"}`}
-          src={'./ticket_to_tene.png'}
+          src={"./ticket_to_tene.png"}
         />
         <div className="vinyl-dot center" />
-        {!player.start && (
+        {!player && (
           <Loader
             type="Audio"
             className="center"
@@ -139,7 +135,7 @@ function App() {
             width={100}
           />
         )}
-        {player.start && !playing && (
+        {player && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started
           </button>
@@ -175,29 +171,11 @@ function App() {
         <img
           className="buy-wrapper-image"
           alt="bandcamp"
-          src={'./bandcamp.png'}
+          src={"./bandcamp.png"}
         />
       </a>
     </div>
   );
 }
-
-const PlayerComponent = (props) => {
-  useEffect(() => {
-    const player = new Player({
-      onload: () => {
-        for (var i = 0; i < player._buffer.numberOfChannels; i++) {
-          const buffer = player._buffer.getChannelData(i);
-          buffers.push(buffer.slice());
-          reversedBuffers.push(buffer.slice().reverse());
-        }
-        props.onload(player);
-      },
-      url: props.url,
-      loop: props.loop,
-    }).toDestination();
-  }, [props]);
-  return null;
-};
 
 export default App;
