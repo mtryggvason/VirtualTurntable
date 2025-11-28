@@ -34,10 +34,12 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    if (playbackRate > 0.1) {
+    if (playbackRate > 1) {
       player.playbackRate = playbackRate;
+      player.volume.value = 0;
     } else {
       player.playbackRate = 0;
+      player.volume.value = -Infinity;
     }
     const reverse = player.reverse;
     player.reverse = rpm > 0;
@@ -69,7 +71,11 @@ function App() {
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
 
   const player = usePlayer("./socks.[mp3|ogg]", true, (p) => {
-    // Player loaded callback
+    for (var i = 0; i < p._buffer.numberOfChannels; i++) {
+      const buffer = p._buffer.getChannelData(i);
+      buffers.push(buffer.slice());
+      reversedBuffers.push(buffer.slice().reverse());
+    }
   });
   useEffect(() => {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
@@ -78,7 +84,7 @@ function App() {
   const activateListener = async (e) => {
     e.preventDefault();
     try {
-      await start();
+      start();
       const noSleep = new NoSleep();
       noSleep.enable();
       if (player && player.buffer) {
@@ -115,7 +121,6 @@ function App() {
         };
 
         window.addEventListener("devicemotion", handleDeviceMotion);
-        noSleep.enable();
         setPlaying(true);
         setShowRotatingMessage(true);
         lastRoationTime = Date.now();
