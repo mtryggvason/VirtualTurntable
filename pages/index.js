@@ -34,12 +34,12 @@ const setRPM = (gamma, player) => {
   const rpm = Math.round((gamma * 60) / 360);
   if (player) {
     const playbackRate = Math.abs(rpm / 45);
-    if (playbackRate > 1) {
+    if (playbackRate > 0.1) {
       player.playbackRate = playbackRate;
       player.volume.value = 0;
     } else {
-      player.playbackRate = 0;
       player.volume.value = -Infinity;
+      player.playbackRate = 0;
     }
     const reverse = player.reverse;
     player.reverse = rpm > 0;
