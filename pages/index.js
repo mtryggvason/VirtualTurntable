@@ -75,13 +75,22 @@ function App() {
     setShowMessage(!window.DeviceOrientationEvent || !isMobile);
   }, []);
 
-  const activateListener = async () => {
-    start();
-    const noSleep = new NoSleep();
-
-    if (player && player.buffer) {
-      player.start();
-      player.playbackRate = 0;
+  const activateListener = async (e) => {
+    e.preventDefault();
+    try {
+      await start();
+      const noSleep = new NoSleep();
+      noSleep.enable();
+      if (player && player.buffer) {
+        if (player.state === "started") {
+          player.stop();
+        }
+        player.start();
+        player.playbackRate = 0;
+        setPlaying(true);
+      }
+    } catch (error) {
+      console.log("Audio start failed:", error);
     }
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission

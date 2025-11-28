@@ -8,6 +8,7 @@ const usePlayer = (url, loop, onload) => {
   const [player, setPlayer] = useState(null);
 
   useEffect(() => {
+    console.log("NEW");
     const tonePlayer = new Player({
       onload: () => {
         for (var i = 0; i < tonePlayer._buffer.numberOfChannels; i++) {
@@ -23,7 +24,7 @@ const usePlayer = (url, loop, onload) => {
       url: url,
       loop: loop,
     }).toDestination();
-  }, [url, loop, onload]);
+  }, [url]);
 
   return player;
 };
