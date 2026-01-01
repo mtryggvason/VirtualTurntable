@@ -4,17 +4,15 @@
   "private": true,
   "homepage": "https://mtryggvason.github.io/VirtualTurntable",
   "dependencies": {
-    "firebase": "^12.6.0",
-    "gh-pages": "^4.0.0",
-    "next": "latest",
+    "firebase": "^12.7.0",
+    "gh-pages": "^6.3.0",
+    "next": "^14.2.0",
     "nosleep.js": "^0.9.0",
-    "react": "latest",
-    "react-device-detect": "^1.11.14",
-    "react-dom": "latest",
-    "react-loader-spinner": "^3.1.14",
-    "react-scripts": "^3.3.0",
-    "serve": "^11.2.0",
-    "throttle-debounce": "^2.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-loader-spinner": "8.0.0",
+    "react-scripts": "^5.0.1",
+    "swr": "^2.3.8",
     "tone": "14.7.0"
   },
   "scripts": {
@@ -42,9 +40,6 @@
     ]
   },
   "devDependencies": {
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.4.3",
-    "jest": "^24.9.0"
+    "jest": "^30.2.0"
   }
 }

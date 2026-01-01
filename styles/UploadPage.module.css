@@ -1,0 +1,191 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header h1 {
+  color: white;
+  font-family: "akzidenzgrotesk-boldextended";
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.backBtn {
+  background: none;
+  border: 1px solid #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.backBtn:hover {
+  background: #333;
+}
+
+.content {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.error {
+  background: #ff4444;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.inputGroup input[type="text"] {
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.inputGroup input[type="text"]:focus {
+  outline: none;
+  border-color: #00BFFF;
+}
+
+.inputGroup input[type="text"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fileInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fileInput input[type="file"] {
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.fileInput input[type="file"]:focus {
+  outline: none;
+  border-color: #00BFFF;
+}
+
+.fileInput input[type="file"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fileInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px;
+  color: #999;
+  font-size: 14px;
+}
+
+.artworkPreview {
+  margin-top: 10px;
+}
+
+.artworkPreview h4 {
+  color: white;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.previewImage {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+.submitBtn {
+  background: #00BFFF;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #0099cc;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header h1 {
+    text-align: left;
+    order: 2;
+  }
+
+  .backBtn {
+    order: 1;
+    align-self: flex-start;
+  }
+}

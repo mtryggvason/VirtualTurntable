@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { isMobile } from "react-device-detect";
+import { useState, useEffect } from "react";
 import { Buffer, start } from "tone";
-import Loader from "react-loader-spinner";
 import Rotate from "../src/svgs/rotate.svg";
 import usePlayer from "../hooks/usePlayer";
 
@@ -78,7 +76,9 @@ function App() {
     }
   });
   useEffect(() => {
-    setShowMessage(!window.DeviceOrientationEvent || !isMobile);
+    setShowMessage(
+      !window.DeviceOrientationEvent || !DeviceMotionEvent.requestPermission
+    );
   }, []);
 
   const activateListener = async (e) => {
@@ -140,15 +140,7 @@ function App() {
           src={"./ticket_to_tene.png"}
         />
         <div className="vinyl-dot center" />
-        {!player && (
-          <Loader
-            type="Audio"
-            className="center"
-            color="#00BFFF"
-            height={100}
-            width={100}
-          />
-        )}
+
         {player && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started

@@ -1,0 +1,21 @@
+.header {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.loginBtn {
+  background: none;
+  border: 1px solid #00BFFF;
+  color: #00BFFF;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.loginBtn:hover {
+  background: #00BFFF;
+  color: white;
+}
