@@ -1,15 +1,20 @@
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase';
+import { storage, auth } from '../firebase';
 
 // Upload a file to Firebase Storage
 export const uploadFile = async (file, path) => {
   try {
+    // Debug: Check auth state
+    console.log('Auth state during upload:', auth.currentUser);
+    console.log('Upload path:', path);
+    
     const storageRef = ref(storage, path);
     const snapshot = await uploadBytes(storageRef, file);
     const downloadURL = await getDownloadURL(snapshot.ref);
     return downloadURL;
   } catch (error) {
     console.error('Error uploading file:', error);
+    console.error('Auth user:', auth.currentUser);
     throw error;
   }
 };

@@ -15,9 +15,11 @@ function UserPage() {
     data: songs = [],
     error,
     isLoading,
-  } = useSWR(user ? ["userSongs", user.uid] : null, () =>
+  } = useSWR(user ? "userSongs/" + user.uid : null, () =>
     getUserSongs(user.uid)
   );
+
+  console.log(isLoading);
 
   if (error) {
     return (
@@ -101,7 +103,7 @@ function UserPage() {
                     <button
                       className={styles.playBtn}
                       onClick={() => {
-                        router.push(`/?song=${song.id}`);
+                        router.push(`/play/${song.id}`);
                       }}
                     >
                       Play

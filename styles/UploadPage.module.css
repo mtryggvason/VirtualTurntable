@@ -2,7 +2,6 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  min-height: 100vh;
 }
 
 .header {
@@ -82,7 +81,7 @@
 
 .inputGroup input[type="text"]:focus {
   outline: none;
-  border-color: #00BFFF;
+  border-color: #00bfff;
 }
 
 .inputGroup input[type="text"]:disabled {
@@ -107,7 +106,7 @@
 
 .fileInput input[type="file"]:focus {
   outline: none;
-  border-color: #00BFFF;
+  border-color: #00bfff;
 }
 
 .fileInput input[type="file"]:disabled {
@@ -145,7 +144,7 @@
 }
 
 .submitBtn {
-  background: #00BFFF;
+  background: #00bfff;
   border: none;
   color: white;
   padding: 15px 30px;

@@ -69,7 +69,7 @@ let lastRoationTime = 0;
 function TurntablePlayer() {
   const router = useRouter();
   const { id } = router.query;
-  
+
   const [song, setSong] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -105,7 +105,7 @@ function TurntablePlayer() {
     // Reset buffers for new song
     buffers = [];
     reversedBuffers = [];
-    
+
     for (var i = 0; i < p._buffer.numberOfChannels; i++) {
       const buffer = p._buffer.getChannelData(i);
       buffers.push(buffer.slice());
@@ -114,7 +114,9 @@ function TurntablePlayer() {
   });
 
   useEffect(() => {
-    setShowMessage(!window.DeviceOrientationEvent);
+    setShowMessage(
+      !window.DeviceOrientationEvent || !DeviceMotionEvent.requestPermission
+    );
   }, []);
 
   const activateListener = async (e) => {
@@ -134,7 +136,7 @@ function TurntablePlayer() {
     } catch (error) {
       console.log("Audio start failed:", error);
     }
-    
+
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
         ? await DeviceMotionEvent.requestPermission()
@@ -221,7 +223,9 @@ function TurntablePlayer() {
     <div className="app">
       <div className="title-wrapper">
         <span className="playing-title">Now Playing</span>
-        <div className="track-title">{song.artist} - {song.name}</div>
+        <div className="track-title">
+          {song.artist} - {song.name}
+        </div>
       </div>
       <div className="vinyl-wrapper">
         <img
@@ -230,9 +234,7 @@ function TurntablePlayer() {
           src={song.artworkUrl || "./ticket_to_tene.png"}
         />
         <div className="vinyl-dot center" />
-        {!player && (
-          <div className="center">Loading audio...</div>
-        )}
+        {!player && <div className="center">Loading audio...</div>}
         {player && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started

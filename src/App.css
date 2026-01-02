@@ -3,16 +3,20 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .app {
   background: black;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
   font-family: "akzidenzgrotesk-extended";
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px 20px;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
@@ -127,7 +131,6 @@ button {
   font-weight: bold;
   padding: 10px;
 }
-
 
 .rotating-svg {
   display: block;

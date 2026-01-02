@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { mutate } from 'swr';
-import ProtectedRoute from '../../components/ProtectedRoute';
-import { useAuth } from '../../contexts/AuthContext';
-import { uploadSong, uploadArtwork } from '../../utils/storage';
-import { addSong } from '../../utils/firestore';
-import styles from '../../styles/UploadPage.module.css';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { mutate } from "swr";
+import ProtectedRoute from "../../components/ProtectedRoute";
+import { useAuth } from "../../contexts/AuthContext";
+import { uploadSong, uploadArtwork } from "../../utils/storage";
+import { addSong } from "../../utils/firestore";
+import styles from "../../styles/UploadPage.module.css";
 
 function UploadPage() {
   const { user } = useAuth();
   const router = useRouter();
-  
+
   const [formData, setFormData] = useState({
-    name: '',
-    artist: ''
+    name: "",
+    artist: "",
   });
   const [songFile, setSongFile] = useState(null);
   const [artworkFile, setArtworkFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -31,20 +31,23 @@ function UploadPage() {
     const file = e.target.files[0];
     if (file) {
       // Check if it's an MP3 file
-      if (file.type !== 'audio/mpeg' && !file.name.toLowerCase().endsWith('.mp3')) {
-        setError('Please select an MP3 file only');
+      if (
+        file.type !== "audio/mpeg" &&
+        !file.name.toLowerCase().endsWith(".mp3")
+      ) {
+        setError("Please select an MP3 file only");
         return;
       }
-      
+
       // Check file size (10MB limit)
       const maxSize = 10 * 1024 * 1024; // 10MB in bytes
       if (file.size > maxSize) {
-        setError('File size must be less than 10MB');
+        setError("File size must be less than 10MB");
         return;
       }
-      
+
       setSongFile(file);
-      setError('');
+      setError("");
     }
   };
 
@@ -52,54 +55,56 @@ function UploadPage() {
     const file = e.target.files[0];
     if (file) {
       // Check if it's an image file
-      if (!file.type.startsWith('image/')) {
-        setError('Please select an image file (JPG, PNG, etc.)');
+      if (!file.type.startsWith("image/")) {
+        setError("Please select an image file (JPG, PNG, etc.)");
         return;
       }
       setArtworkFile(file);
-      setError('');
+      setError("");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.artist || !songFile) {
-      setError('Please fill in all required fields');
+      setError("Please fill in all required fields");
       return;
     }
 
     setUploading(true);
-    setError('');
+    setError("");
 
     try {
       // Upload song file
       const songUrl = await uploadSong(songFile, user.uid, formData.name);
-      
+
       // Upload artwork if provided
       let artworkUrl = null;
       if (artworkFile) {
         artworkUrl = await uploadArtwork(artworkFile, user.uid, formData.name);
       }
-
+      debugger;
       // Save song metadata to Firestore
-      await addSong({
+      const songId = await addSong({
         name: formData.name,
         artist: formData.artist,
         songUrl,
         artworkUrl,
         userId: user.uid,
-        userEmail: user.email
+        userEmail: user.email,
       });
 
-      // Invalidate SWR cache to refresh user songs
-      mutate(['userSongs', user.uid]);
+      debugger;
 
-      // Redirect to user page
-      router.push('/user');
+      // Invalidate SWR cache to refresh user songs
+      mutate("userSongs" + user.uid);
+
+      // Redirect to play the new song
+      router.push(`/play/${songId}`);
     } catch (error) {
-      console.error('Upload failed:', error);
-      setError('Upload failed. Please try again.');
+      console.error("Upload failed:", error);
+      setError("Upload failed. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -109,18 +114,18 @@ function UploadPage() {
     <div className="app">
       <div className={styles.container}>
         <div className={styles.header}>
-          <button 
-            onClick={() => router.push('/user')}
+          <button
+            onClick={() => router.push("/user")}
             className={styles.backBtn}
           >
-            ← Back to My Songs
+            ← Back
           </button>
           <h1>Upload New Song</h1>
         </div>
 
         <div className={styles.content}>
           {error && <div className={styles.error}>{error}</div>}
-          
+
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputGroup}>
               <label htmlFor="name">Song Name *</label>
@@ -151,7 +156,9 @@ function UploadPage() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="songFile">Song File (MP3) * <small>(Max 10MB)</small></label>
+              <label htmlFor="songFile">
+                Song File (MP3) * <small>(Max 10MB)</small>
+              </label>
               <div className={styles.fileInput}>
                 <input
                   type="file"
@@ -163,7 +170,7 @@ function UploadPage() {
                 />
                 {songFile && (
                   <div className={styles.fileInfo}>
-                    <span>📎 {songFile.name}</span>
+                    <span>{songFile.name}</span>
                     <span>({(songFile.size / 1024 / 1024).toFixed(2)} MB)</span>
                   </div>
                 )}
@@ -182,8 +189,10 @@ function UploadPage() {
                 />
                 {artworkFile && (
                   <div className={styles.fileInfo}>
-                    <span>🖼️ {artworkFile.name}</span>
-                    <span>({(artworkFile.size / 1024 / 1024).toFixed(2)} MB)</span>
+                    <span>{artworkFile.name}</span>
+                    <span>
+                      ({(artworkFile.size / 1024 / 1024).toFixed(2)} MB)
+                    </span>
                   </div>
                 )}
               </div>
@@ -192,20 +201,20 @@ function UploadPage() {
             {artworkFile && (
               <div className={styles.artworkPreview}>
                 <h4>Artwork Preview:</h4>
-                <img 
-                  src={URL.createObjectURL(artworkFile)} 
+                <img
+                  src={URL.createObjectURL(artworkFile)}
                   alt="Artwork preview"
                   className={styles.previewImage}
                 />
               </div>
             )}
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={styles.submitBtn}
               disabled={uploading}
             >
-              {uploading ? 'Uploading...' : 'Upload Song'}
+              {uploading ? "Uploading..." : "Upload Song"}
             </button>
           </form>
         </div>
