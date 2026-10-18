@@ -5,7 +5,7 @@ import { BARS_PER_TURN, SECONDS_PER_BAR } from "../hooks/useTurntable";
 const INNER_RADIUS = 0.76;
 const OUTER_RADIUS = 0.99;
 const BAR_ANGLE = (2 * Math.PI) / BARS_PER_TURN;
-const NEEDLE_COLOR = "#f9e412";
+const NEEDLE_COLOR = "#e0623a";
 
 // The needle is fixed at the top of the screen and the waveform turns under
 // it: playing forward rotates the ring counter-clockwise, so upcoming audio
@@ -80,7 +80,7 @@ const WaveformRing = ({ peaks, getPosition }) => {
           level = mix(placeholder, peaks[((bar % peaks.length) + peaks.length) % peaks.length], morph);
           alpha = mix(LOADING_ALPHA, played * (0.15 + 0.85 * fade), morph);
         }
-        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(242, 228, 218, ${alpha})`;
         drawBar(angle, level);
       }
 

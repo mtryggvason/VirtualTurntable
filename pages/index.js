@@ -11,7 +11,7 @@ function App() {
   const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
 
-  const { ready, start, setRate, peaks, getPosition } = useTurntable("./socks.mp3");
+  const { ready, start, setRate, peaks, getPosition } = useTurntable("./split_the_difference.mp3");
   useEffect(() => {
     setShowMessage(
       !window.DeviceOrientationEvent || !DeviceMotionEvent.requestPermission
@@ -47,14 +47,14 @@ function App() {
     <div className="app">
       <div className="title-wrapper">
         <span className="playing-title ">Now Playing</span>
-        <div className="track-title">Moff & Tarkin - Socks by the Sofa</div>
+        <div className="track-title">Moff & Tarkin - Split the Difference</div>
       </div>
       <div className="vinyl-wrapper">
         <WaveformRing peaks={peaks} getPosition={getPosition} />
         <img
           alt="vinyl"
           className={`vinyl-image  ${ready ? "" : "loading"}`}
-          src={"./ticket_to_tene.png"}
+          src={"./sit_down_to.jpg"}
         />
         <div className="vinyl-dot center" />
 
@@ -84,7 +84,7 @@ function App() {
           </div>
         )}
       </div>
-      <a className="buy-wrapper" href="https://lagaffetales.bandcamp.com">
+      <a className="buy-wrapper" href="https://fortunea.bandcamp.com/album/sit-down-to-fortunea041">
         Buy on{" "}
         <img
           className="buy-wrapper-image"
