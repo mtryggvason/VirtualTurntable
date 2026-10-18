@@ -20,7 +20,7 @@ function App() {
     e.preventDefault();
     start();
     const noSleep = new NoSleep();
-    noSleep.enable();
+    noSleep.enable().catch((error) => console.log("Wake lock failed:", error));
     setPlaying(true);
 
     if (window.DeviceOrientationEvent) {
