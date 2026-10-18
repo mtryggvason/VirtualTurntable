@@ -18,27 +18,32 @@ html {
 .app {
   background: var(--bg);
   height: 100vh;
+  /* The visible area, excluding mobile browser toolbars, so the buy link stays on screen */
+  height: 100dvh;
   width: 100vw;
   font-family: "akzidenzgrotesk-extended";
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 12px;
   padding: 20px 20px;
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  .app {
-    height: calc(100vh - 70px);
-  }
-}
+/* Takes the space between the title and the buy link; the ring shrinks to fit it */
 .vinyl-wrapper {
   position: relative;
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.vinyl-wrapper {
   --ring-size: min(360px, calc(100vw - 24px));
+}
+@supports (container-type: size) {
+  .vinyl-wrapper {
+    container-type: size;
+    --ring-size: min(360px, calc(100vw - 24px), 100cqh);
+  }
 }
 .waveform-ring {
   position: absolute;
