@@ -15,10 +15,16 @@ const NEEDLE_ANGLE = -Math.PI / 2;
 const angleOf = (bar, head) => NEEDLE_ANGLE + (bar - head) * BAR_ANGLE;
 
 // While loading, a placeholder waveform ripples around the full ring
-const loadingLevel = (bar, seconds) =>
+const loadingLevel = (angle, seconds) =>
   0.15 +
-  0.25 * (0.5 + 0.5 * Math.sin(bar * BAR_ANGLE * 3 - seconds * 4)) +
-  0.15 * (0.5 + 0.5 * Math.sin(bar * BAR_ANGLE * 7 + seconds * 2.5));
+  0.25 * (0.5 + 0.5 * Math.sin(angle * 3 - seconds * 4)) +
+  0.15 * (0.5 + 0.5 * Math.sin(angle * 7 + seconds * 2.5));
+const LOADING_ALPHA = 0.5;
+
+// Once the song is loaded the placeholder morphs into the real waveform
+const MORPH_SECONDS = 0.8;
+const easeInOut = (t) => t * t * (3 - 2 * t);
+const mix = (from, to, t) => from + (to - from) * t;
 
 const WaveformRing = ({ peaks, getPosition }) => {
   const canvasRef = useRef(null);
@@ -27,6 +33,7 @@ const WaveformRing = ({ peaks, getPosition }) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let frame;
+    const loadedAt = performance.now() / 1000;
 
     const draw = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -53,36 +60,44 @@ const WaveformRing = ({ peaks, getPosition }) => {
         ctx.stroke();
       };
 
-      if (!peaks) {
-        const seconds = performance.now() / 1000;
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-        for (let bar = 0; bar < BARS_PER_TURN; bar++) {
-          drawBar(bar * BAR_ANGLE, loadingLevel(bar, seconds));
-        }
-        frame = requestAnimationFrame(draw);
-        return;
-      }
-
-      const head = getPosition() / SECONDS_PER_BAR;
+      const seconds = performance.now() / 1000;
+      const morph = peaks
+        ? easeInOut(Math.min((seconds - loadedAt) / MORPH_SECONDS, 1))
+        : 0;
+      const head = peaks ? getPosition() / SECONDS_PER_BAR : 0;
       const current = Math.floor(head);
       const half = BARS_PER_TURN / 2;
       for (let offset = -half; offset < half; offset++) {
         const bar = current + offset;
-        const level = peaks[((bar % peaks.length) + peaks.length) % peaks.length];
-        // Fade towards the far side of the ring; dim what has already played
-        const fade = 1 - Math.abs(offset) / half;
-        const alpha = (offset < 0 ? 0.35 : 1) * (0.15 + 0.85 * fade);
+        const angle = angleOf(bar, head);
+        const placeholder = loadingLevel(angle, seconds);
+        let level = placeholder;
+        let alpha = LOADING_ALPHA;
+        if (peaks) {
+          // Fade towards the far side of the ring; dim what has already played
+          const fade = 1 - Math.abs(offset) / half;
+          const played = offset < 0 ? 0.35 : 1;
+          level = mix(placeholder, peaks[((bar % peaks.length) + peaks.length) % peaks.length], morph);
+          alpha = mix(LOADING_ALPHA, played * (0.15 + 0.85 * fade), morph);
+        }
         ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-        drawBar(angleOf(bar, head), level);
+        drawBar(angle, level);
+      }
+
+      if (!peaks) {
+        frame = requestAnimationFrame(draw);
+        return;
       }
 
       const needle = NEEDLE_ANGLE;
+      ctx.globalAlpha = morph;
       ctx.strokeStyle = NEEDLE_COLOR;
       ctx.lineWidth = 2 * dpr;
       ctx.beginPath();
       ctx.moveTo(center + Math.cos(needle) * (inner - 6 * dpr), center + Math.sin(needle) * (inner - 6 * dpr));
       ctx.lineTo(center + Math.cos(needle) * center, center + Math.sin(needle) * center);
       ctx.stroke();
+      ctx.globalAlpha = 1;
 
       frame = requestAnimationFrame(draw);
     };

@@ -45,6 +45,8 @@ html {
   width: calc(var(--ring-size) * 0.72);
   height: calc(var(--ring-size) * 0.72);
   object-fit: cover;
+  /* Matches MORPH_SECONDS in WaveformRing.js */
+  transition: opacity 0.8s ease-in-out;
 }
 .vinyl-image.loading {
   opacity: 0.5;
