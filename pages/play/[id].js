@@ -1,70 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Buffer, start } from "tone";
 import Rotate from "../../src/svgs/rotate.svg";
-import usePlayer from "../../hooks/usePlayer";
+import useTurntable, { rotationToRate } from "../../hooks/useTurntable";
 import { getSongById } from "../../utils/firestore";
 import NoSleep from "nosleep.js";
-
-let reversed = false;
-let buffers = [];
-let reversedBuffers = [];
-
-/**
- *  Reverse the buffer.
- *  @private
- *  @return {Tone.Buffer} this
- */
-Buffer.prototype._reverse = function () {
-  if (this.loaded) {
-    reversed = !reversed;
-    if (reversed) {
-      this._buffer.copyToChannel(reversedBuffers[0], 0, 0);
-      this._buffer.copyToChannel(reversedBuffers[1], 1, 0);
-    } else {
-      this._buffer.copyToChannel(buffers[0], 0, 0);
-      this._buffer.copyToChannel(buffers[1], 1, 0);
-    }
-  }
-  return this;
-};
-
-const setRPM = (gamma, player) => {
-  const rpm = Math.round((gamma * 60) / 360);
-  if (player) {
-    const playbackRate = Math.abs(rpm / 45);
-    if (playbackRate > 0.1) {
-      player.playbackRate = playbackRate;
-      player.volume.value = 0;
-    } else {
-      player.volume.value = -Infinity;
-      player.playbackRate = 0;
-    }
-    const reverse = player.reverse;
-    player.reverse = rpm > 0;
-    if (reverse !== player.reverse) {
-      offset = player.buffer.duration - offset;
-      offset = Math.max(Math.min(offset, player.buffer.duration), 0);
-      player.start(0, offset);
-    }
-  }
-};
-
-const updateOffset = (
-  gamma,
-  offset,
-  timeSinceLastUpdate,
-  minValue,
-  maxValue
-) => {
-  const rpm = Math.round((gamma * 60) / 360);
-  const playbackRate = Math.abs(rpm / 45);
-  const tmp = offset + (playbackRate * timeSinceLastUpdate) / 1000;
-  return Math.max(Math.min(tmp, maxValue), minValue);
-};
-
-let offset = 0;
-let lastRoationTime = 0;
 
 function TurntablePlayer() {
   const router = useRouter();
@@ -101,17 +40,7 @@ function TurntablePlayer() {
     }
   };
 
-  const player = usePlayer(song?.songUrl, true, (p) => {
-    // Reset buffers for new song
-    buffers = [];
-    reversedBuffers = [];
-
-    for (var i = 0; i < p._buffer.numberOfChannels; i++) {
-      const buffer = p._buffer.getChannelData(i);
-      buffers.push(buffer.slice());
-      reversedBuffers.push(buffer.slice().reverse());
-    }
-  });
+  const { ready, start, setRate } = useTurntable(song?.songUrl);
 
   useEffect(() => {
     setShowMessage(
@@ -121,21 +50,10 @@ function TurntablePlayer() {
 
   const activateListener = async (e) => {
     e.preventDefault();
-    try {
-      start();
-      const noSleep = new NoSleep();
-      noSleep.enable();
-      if (player && player.buffer) {
-        if (player.state === "started") {
-          player.stop();
-        }
-        player.start();
-        player.playbackRate = 0;
-        setPlaying(true);
-      }
-    } catch (error) {
-      console.log("Audio start failed:", error);
-    }
+    start();
+    const noSleep = new NoSleep();
+    noSleep.enable();
+    setPlaying(true);
 
     if (window.DeviceOrientationEvent) {
       const response = DeviceMotionEvent.requestPermission
@@ -146,23 +64,12 @@ function TurntablePlayer() {
         (response.result && response.result === "granted")
       ) {
         const handleDeviceMotion = (e) => {
-          if (player && player.buffer) {
-            offset = updateOffset(
-              e.rotationRate.gamma,
-              offset,
-              Date.now() - lastRoationTime,
-              0,
-              player.buffer.duration
-            );
-            setRPM(e.rotationRate.gamma, player);
-            lastRoationTime = Date.now();
-          }
+          setRate(rotationToRate(e.rotationRate.gamma));
         };
 
         window.addEventListener("devicemotion", handleDeviceMotion);
         setPlaying(true);
         setShowRotatingMessage(true);
-        lastRoationTime = Date.now();
       }
     }
   };
@@ -230,12 +137,12 @@ function TurntablePlayer() {
       <div className="vinyl-wrapper">
         <img
           alt="vinyl"
-          className={`vinyl-image ${player ? "" : "loading"}`}
+          className={`vinyl-image ${ready ? "" : "loading"}`}
           src={song.artworkUrl || "./ticket_to_tene.png"}
         />
         <div className="vinyl-dot center" />
-        {!player && <div className="center">Loading audio...</div>}
-        {player && !playing && (
+        {!ready && <div className="center">Loading audio...</div>}
+        {ready && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started
           </button>
