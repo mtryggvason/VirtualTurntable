@@ -164,6 +164,23 @@ button {
   padding: 10px;
 }
 
+/* Whole-track waveform between the record and the buy link */
+.waveform-overview {
+  display: block;
+  flex-shrink: 0;
+  width: min(360px, 100%);
+  height: 48px;
+  margin: 0 auto;
+  cursor: pointer;
+  /* Dragging scrubs the track instead of scrolling the page */
+  touch-action: none;
+  /* Matches MORPH_SECONDS in WaveformRing.js */
+  transition: opacity 0.8s ease-in-out;
+}
+.waveform-overview.loading {
+  opacity: 0;
+}
+
 /* Sits where the Get Started button appears once the song has loaded */
 .loading-label {
   border-radius: 5px;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Rotate from "../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../hooks/useTurntable";
 import WaveformRing from "../components/WaveformRing";
+import WaveformOverview from "../components/WaveformOverview";
 import CloseButton from "../components/CloseButton";
 import useHasGyroscope from "../hooks/useHasGyroscope";
 
@@ -13,9 +14,8 @@ function App() {
 
   // Without a motion sensor the song can't be played, so don't download it
   const hasGyroscope = useHasGyroscope();
-  const { ready, start, setRate, peaks, getPosition } = useTurntable(
-    hasGyroscope ? "./split_the_difference.mp3" : null
-  );
+  const { ready, start, setRate, peaks, duration, getPosition, seek } =
+    useTurntable(hasGyroscope ? "./split_the_difference.mp3" : null);
 
   const activateListener = async (e) => {
     e.preventDefault();
@@ -84,6 +84,14 @@ function App() {
           </div>
         )}
       </div>
+      {hasGyroscope !== false && (
+        <WaveformOverview
+          peaks={peaks}
+          duration={duration}
+          getPosition={getPosition}
+          seek={seek}
+        />
+      )}
       <a className="buy-wrapper" href="https://fortunea.bandcamp.com/album/sit-down-to-fortunea041">
         Buy on{" "}
         <img

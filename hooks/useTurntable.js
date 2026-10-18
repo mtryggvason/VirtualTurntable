@@ -49,6 +49,8 @@ const useTurntable = (url) => {
   const headRef = useRef(null);
   const [ready, setReady] = useState(false);
   const [peaks, setPeaks] = useState(null);
+  // Track length in seconds, once loaded
+  const [duration, setDuration] = useState(null);
 
   useEffect(() => {
     if (!url) return;
@@ -56,6 +58,7 @@ const useTurntable = (url) => {
     let node = null;
     setReady(false);
     setPeaks(null);
+    setDuration(null);
     headRef.current = null;
     const ctx = getContext(basePath);
 
@@ -70,6 +73,7 @@ const useTurntable = (url) => {
         if (cancelled) return;
 
         setPeaks(computePeaks(audioBuffer));
+        setDuration(audioBuffer.duration);
         node = new AudioWorkletNode(ctx, "turntable", {
           numberOfInputs: 0,
           outputChannelCount: [2],
@@ -83,6 +87,8 @@ const useTurntable = (url) => {
           channels.map((channel) => channel.buffer)
         );
         const { length, sampleRate } = audioBuffer;
+        // Known start position, so seeking works before the audio has started
+        headRef.current = { position: 0, rate: 0, length, sampleRate, at: performance.now() };
         node.port.onmessage = (e) => {
           headRef.current = { ...e.data, length, sampleRate, at: performance.now() };
         };
@@ -113,6 +119,18 @@ const useTurntable = (url) => {
     }
   }, []);
 
+  // Jump the read head to a point in the track; the rotation still sets the
+  // speed, so nothing plays until the phone is turning
+  const seek = useCallback((seconds) => {
+    const node = nodeRef.current;
+    const head = headRef.current;
+    if (!node || !head) return;
+    const position = Math.min(Math.max(seconds, 0), head.length / head.sampleRate) * head.sampleRate;
+    node.port.postMessage({ seek: position });
+    // Move the display now rather than on the audio thread's next report
+    headRef.current = { ...head, position, at: performance.now() };
+  }, []);
+
   // Current play position in seconds, extrapolated between the audio thread's
   // ~40Hz reports so the display moves smoothly at the screen's frame rate
   const getPosition = useCallback(() => {
@@ -124,7 +142,7 @@ const useTurntable = (url) => {
     return wrapped / head.sampleRate;
   }, []);
 
-  return { ready, start, setRate, peaks, getPosition };
+  return { ready, start, setRate, peaks, duration, getPosition, seek };
 };
 
 export default useTurntable;

@@ -7,6 +7,9 @@
 const RATE_SMOOTHING_SECONDS = 0.05;
 const SILENT_BELOW = 0.03;
 const FULL_VOLUME_ABOVE = 0.12;
+// Seeks fade out, jump, then fade back in over this long each way, so the
+// jump doesn't click
+const SEEK_FADE_SECONDS = 0.005;
 
 class TurntableProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
@@ -21,11 +24,41 @@ class TurntableProcessor extends AudioWorkletProcessor {
     this.rate = 0;
     this.blocks = 0;
     this.smoothing = 1 - Math.exp(-1 / (RATE_SMOOTHING_SECONDS * sampleRate));
+    this.fadeSamples = Math.round(SEEK_FADE_SECONDS * sampleRate);
+    // Pending seek target in samples, and progress through its fade (counts
+    // down to -fadeSamples: positive is fading out, negative fading back in)
+    this.seekTo = null;
+    this.seekFade = 0;
     this.port.onmessage = (e) => {
-      this.channels = e.data.channels;
-      this.length = this.channels[0].length;
-      this.position = 0;
+      if (e.data.channels) {
+        this.channels = e.data.channels;
+        this.length = this.channels[0].length;
+        this.position = 0;
+      } else if (e.data.seek !== undefined) {
+        this.seekTo = e.data.seek;
+        // Fade out from wherever an earlier seek's fade-in has got to
+        if (this.seekFade === 0) this.seekFade = this.fadeSamples;
+        else if (this.seekFade < 0) {
+          this.seekFade = Math.max(this.seekFade + this.fadeSamples, 1);
+        }
+      }
     };
+  }
+
+  // Gain for the seek fade, jumping the read head at its silent midpoint
+  seekGain() {
+    if (this.seekFade === 0) return 1;
+    if (this.seekFade > 0) {
+      this.seekFade--;
+      if (this.seekFade === 0) {
+        this.position = Math.min(Math.max(this.seekTo, 0), this.length - 1);
+        this.seekTo = null;
+        this.seekFade = -this.fadeSamples;
+      }
+      return this.seekFade > 0 ? this.seekFade / this.fadeSamples : 0;
+    }
+    this.seekFade++;
+    return 1 + this.seekFade / this.fadeSamples;
   }
 
   // 4-point Hermite interpolation, wrapping around the loop point
@@ -55,7 +88,7 @@ class TurntableProcessor extends AudioWorkletProcessor {
         Math.max((speed - SILENT_BELOW) / (FULL_VOLUME_ABOVE - SILENT_BELOW), 0),
         1
       );
-      const gain = t * t * (3 - 2 * t);
+      const gain = t * t * (3 - 2 * t) * this.seekGain();
       const index = Math.floor(this.position);
       const frac = this.position - index;
       for (let c = 0; c < output.length; c++) {

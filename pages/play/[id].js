@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Rotate from "../../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../../hooks/useTurntable";
 import WaveformRing from "../../components/WaveformRing";
+import WaveformOverview from "../../components/WaveformOverview";
 import CloseButton from "../../components/CloseButton";
 import useHasGyroscope from "../../hooks/useHasGyroscope";
 import { getSongById } from "../../utils/firestore";
@@ -44,9 +45,8 @@ function TurntablePlayer() {
 
   // Without a motion sensor the song can't be played, so don't download it
   const hasGyroscope = useHasGyroscope();
-  const { ready, start, setRate, peaks, getPosition } = useTurntable(
-    hasGyroscope ? song?.songUrl : null
-  );
+  const { ready, start, setRate, peaks, duration, getPosition, seek } =
+    useTurntable(hasGyroscope ? song?.songUrl : null);
 
   const activateListener = async (e) => {
     e.preventDefault();
@@ -169,6 +169,14 @@ function TurntablePlayer() {
           </div>
         )}
       </div>
+      {hasGyroscope !== false && (
+        <WaveformOverview
+          peaks={peaks}
+          duration={duration}
+          getPosition={getPosition}
+          seek={seek}
+        />
+      )}
       <div className="buy-wrapper">
         <button onClick={() => router.push("/")} className="buy-wrapper">
           ← Back to Home
