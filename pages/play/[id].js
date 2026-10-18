@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Rotate from "../../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../../hooks/useTurntable";
 import WaveformRing from "../../components/WaveformRing";
+import CloseButton from "../../components/CloseButton";
 import { getSongById } from "../../utils/firestore";
 import NoSleep from "nosleep.js";
 
@@ -140,7 +141,7 @@ function TurntablePlayer() {
         <img
           alt="vinyl"
           className={`vinyl-image ${ready ? "" : "loading"}`}
-          src={song.artworkUrl || "./ticket_to_tene.png"}
+          src={song.artworkUrl || `${router.basePath}/ticket_to_tene.png`}
         />
         <div className="vinyl-dot center" />
         {ready && !playing && (
@@ -150,12 +151,7 @@ function TurntablePlayer() {
         )}
         {playing && showRotatingMessage && (
           <div className="message center">
-            <img
-              alt="close"
-              onClick={() => setShowRotatingMessage(false)}
-              className="message-close"
-              src="/close.png"
-            ></img>
+            <CloseButton onClick={() => setShowRotatingMessage(false)} />
             <Rotate className="rotate rotating-svg"></Rotate>
             Turn off silent mode and spin the phone to hear the song play
           </div>

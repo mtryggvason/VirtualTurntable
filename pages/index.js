@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Rotate from "../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../hooks/useTurntable";
 import WaveformRing from "../components/WaveformRing";
+import CloseButton from "../components/CloseButton";
 
 import NoSleep from "nosleep.js";
 
@@ -64,12 +65,7 @@ function App() {
         )}
         {playing && showRotatingMessage && (
           <div className="message center">
-            <img
-              alt="close"
-              onClick={() => setShowRotatingMessage(false)}
-              className="message-close"
-              src="close.png"
-            ></img>
+            <CloseButton onClick={() => setShowRotatingMessage(false)} />
             <Rotate className="rotate rotating-svg"></Rotate>
             Turn off silent mode and spin the phone to hear the song play
           </div>
