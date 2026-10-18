@@ -1,22 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Rotate from "../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../hooks/useTurntable";
 import WaveformRing from "../components/WaveformRing";
 import CloseButton from "../components/CloseButton";
+import useHasGyroscope from "../hooks/useHasGyroscope";
 
 import NoSleep from "nosleep.js";
 
 function App() {
   const [playing, setPlaying] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
 
-  const { ready, start, setRate, peaks, getPosition } = useTurntable("./split_the_difference.mp3");
-  useEffect(() => {
-    setShowMessage(
-      !window.DeviceOrientationEvent || !DeviceMotionEvent.requestPermission
-    );
-  }, []);
+  // Without a motion sensor the song can't be played, so don't download it
+  const hasGyroscope = useHasGyroscope();
+  const { ready, start, setRate, peaks, getPosition } = useTurntable(
+    hasGyroscope ? "./split_the_difference.mp3" : null
+  );
 
   const activateListener = async (e) => {
     e.preventDefault();
@@ -50,7 +49,9 @@ function App() {
         <div className="track-title">Moff & Tarkin - Split the Difference</div>
       </div>
       <div className="vinyl-wrapper">
-        <WaveformRing peaks={peaks} getPosition={getPosition} />
+        {hasGyroscope !== false && (
+          <WaveformRing peaks={peaks} getPosition={getPosition} />
+        )}
         <img
           alt="vinyl"
           className={`vinyl-image  ${ready ? "" : "loading"}`}
@@ -58,6 +59,9 @@ function App() {
         />
         <div className="vinyl-dot center" />
 
+        {hasGyroscope !== false && !ready && (
+          <span className="loading-label center">Loading…</span>
+        )}
         {ready && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started
@@ -70,17 +74,13 @@ function App() {
             Turn off silent mode and spin the phone to hear the song play
           </div>
         )}
-        {showMessage && (
+        {hasGyroscope === false && (
           <div className="message">
-            Looks like your device does not support the
-            <a
-              style={{ marginLeft: "5px" }}
-              href="https://caniuse.com/#feat=deviceorientation"
-            >
-              Device Motion event
-            </a>
-            . <br />
-            Please try again with a mobile device
+            This turntable is played by spinning your phone, and this device
+            has no motion sensor.
+            <br />
+            <br />
+            Open this page on your phone to listen.
           </div>
         )}
       </div>
