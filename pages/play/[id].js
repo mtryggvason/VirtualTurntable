@@ -83,8 +83,7 @@ function TurntablePlayer() {
           <span className="playing-title">Loading...</span>
         </div>
         <div className="vinyl-wrapper">
-        <WaveformRing peaks={peaks} getPosition={getPosition} />
-          <div className="center">Loading song...</div>
+          <WaveformRing />
         </div>
       </div>
     );
@@ -137,13 +136,13 @@ function TurntablePlayer() {
         </div>
       </div>
       <div className="vinyl-wrapper">
+        <WaveformRing peaks={peaks} getPosition={getPosition} />
         <img
           alt="vinyl"
           className={`vinyl-image ${ready ? "" : "loading"}`}
           src={song.artworkUrl || "./ticket_to_tene.png"}
         />
         <div className="vinyl-dot center" />
-        {!ready && <div className="center">Loading audio...</div>}
         {ready && !playing && (
           <button className="center" onClick={activateListener}>
             Get Started

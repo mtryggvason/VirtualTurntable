@@ -14,11 +14,16 @@ const NEEDLE_COLOR = "#f9e412";
 const NEEDLE_ANGLE = -Math.PI / 2;
 const angleOf = (bar, head) => NEEDLE_ANGLE + (bar - head) * BAR_ANGLE;
 
+// While loading, a placeholder waveform ripples around the full ring
+const loadingLevel = (bar, seconds) =>
+  0.15 +
+  0.25 * (0.5 + 0.5 * Math.sin(bar * BAR_ANGLE * 3 - seconds * 4)) +
+  0.15 * (0.5 + 0.5 * Math.sin(bar * BAR_ANGLE * 7 + seconds * 2.5));
+
 const WaveformRing = ({ peaks, getPosition }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (!peaks) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let frame;
@@ -38,24 +43,37 @@ const WaveformRing = ({ peaks, getPosition }) => {
       ctx.lineWidth = Math.max(1, ((2 * Math.PI * inner) / BARS_PER_TURN) * 0.5);
       ctx.lineCap = "round";
 
+      const drawBar = (angle, level) => {
+        const length = Math.max(ctx.lineWidth, level * band);
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        ctx.beginPath();
+        ctx.moveTo(center + cos * inner, center + sin * inner);
+        ctx.lineTo(center + cos * (inner + length), center + sin * (inner + length));
+        ctx.stroke();
+      };
+
+      if (!peaks) {
+        const seconds = performance.now() / 1000;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+        for (let bar = 0; bar < BARS_PER_TURN; bar++) {
+          drawBar(bar * BAR_ANGLE, loadingLevel(bar, seconds));
+        }
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+
       const head = getPosition() / SECONDS_PER_BAR;
       const current = Math.floor(head);
       const half = BARS_PER_TURN / 2;
       for (let offset = -half; offset < half; offset++) {
         const bar = current + offset;
         const level = peaks[((bar % peaks.length) + peaks.length) % peaks.length];
-        const length = Math.max(ctx.lineWidth, level * band);
-        const angle = angleOf(bar, head);
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
         // Fade towards the far side of the ring; dim what has already played
         const fade = 1 - Math.abs(offset) / half;
         const alpha = (offset < 0 ? 0.35 : 1) * (0.15 + 0.85 * fade);
         ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.beginPath();
-        ctx.moveTo(center + cos * inner, center + sin * inner);
-        ctx.lineTo(center + cos * (inner + length), center + sin * (inner + length));
-        ctx.stroke();
+        drawBar(angleOf(bar, head), level);
       }
 
       const needle = NEEDLE_ANGLE;
