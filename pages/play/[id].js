@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Rotate from "../../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../../hooks/useTurntable";
+import WaveformRing from "../../components/WaveformRing";
 import { getSongById } from "../../utils/firestore";
 import NoSleep from "nosleep.js";
 
@@ -40,7 +41,7 @@ function TurntablePlayer() {
     }
   };
 
-  const { ready, start, setRate } = useTurntable(song?.songUrl);
+  const { ready, start, setRate, peaks, getPosition } = useTurntable(song?.songUrl);
 
   useEffect(() => {
     setShowMessage(
@@ -82,6 +83,7 @@ function TurntablePlayer() {
           <span className="playing-title">Loading...</span>
         </div>
         <div className="vinyl-wrapper">
+        <WaveformRing peaks={peaks} getPosition={getPosition} />
           <div className="center">Loading song...</div>
         </div>
       </div>

@@ -20,16 +20,43 @@ const getContext = (basePath) => {
 // forward, counter-clockwise plays in reverse
 export const rotationToRate = (gamma) => -(gamma || 0) / 270;
 
+// One full turn of the phone at normal speed covers this much audio (45 rpm)
+export const SECONDS_PER_TURN = 360 / 270;
+// Waveform resolution: bars drawn per turn of the ring
+export const BARS_PER_TURN = 180;
+export const SECONDS_PER_BAR = SECONDS_PER_TURN / BARS_PER_TURN;
+
+// Peak level per bar across all channels, normalised to 0..1
+const computePeaks = (audioBuffer) => {
+  const samplesPerBar = Math.round(SECONDS_PER_BAR * audioBuffer.sampleRate);
+  const peaks = new Float32Array(Math.ceil(audioBuffer.length / samplesPerBar));
+  for (let c = 0; c < audioBuffer.numberOfChannels; c++) {
+    const samples = audioBuffer.getChannelData(c);
+    for (let i = 0; i < samples.length; i++) {
+      const level = Math.abs(samples[i]);
+      const bar = Math.floor(i / samplesPerBar);
+      if (level > peaks[bar]) peaks[bar] = level;
+    }
+  }
+  const loudest = peaks.reduce((max, level) => Math.max(max, level), 0) || 1;
+  return peaks.map((level) => level / loudest);
+};
+
 const useTurntable = (url) => {
   const { basePath } = useRouter();
   const nodeRef = useRef(null);
+  // Last read-head report from the audio thread, in samples
+  const headRef = useRef(null);
   const [ready, setReady] = useState(false);
+  const [peaks, setPeaks] = useState(null);
 
   useEffect(() => {
     if (!url) return;
     let cancelled = false;
     let node = null;
     setReady(false);
+    setPeaks(null);
+    headRef.current = null;
     const ctx = getContext(basePath);
 
     (async () => {
@@ -42,6 +69,7 @@ const useTurntable = (url) => {
         ]);
         if (cancelled) return;
 
+        setPeaks(computePeaks(audioBuffer));
         node = new AudioWorkletNode(ctx, "turntable", {
           numberOfInputs: 0,
           outputChannelCount: [2],
@@ -54,6 +82,10 @@ const useTurntable = (url) => {
           { channels },
           channels.map((channel) => channel.buffer)
         );
+        const { length, sampleRate } = audioBuffer;
+        node.port.onmessage = (e) => {
+          headRef.current = { ...e.data, length, sampleRate, at: performance.now() };
+        };
         node.connect(ctx.destination);
         nodeRef.current = node;
         setReady(true);
@@ -66,6 +98,7 @@ const useTurntable = (url) => {
       cancelled = true;
       if (node) node.disconnect();
       nodeRef.current = null;
+      headRef.current = null;
     };
   }, [url, basePath]);
 
@@ -80,7 +113,18 @@ const useTurntable = (url) => {
     }
   }, []);
 
-  return { ready, start, setRate };
+  // Current play position in seconds, extrapolated between the audio thread's
+  // ~40Hz reports so the display moves smoothly at the screen's frame rate
+  const getPosition = useCallback(() => {
+    const head = headRef.current;
+    if (!head) return 0;
+    const elapsed = (performance.now() - head.at) / 1000;
+    const samples = head.position + head.rate * head.sampleRate * elapsed;
+    const wrapped = ((samples % head.length) + head.length) % head.length;
+    return wrapped / head.sampleRate;
+  }, []);
+
+  return { ready, start, setRate, peaks, getPosition };
 };
 
 export default useTurntable;

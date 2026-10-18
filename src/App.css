@@ -30,12 +30,20 @@ html {
   align-items: center;
   justify-content: center;
 }
+.vinyl-wrapper {
+  --ring-size: min(360px, calc(100vw - 24px));
+}
+.waveform-ring {
+  position: absolute;
+  width: var(--ring-size);
+  height: var(--ring-size);
+}
+/* Sits just inside the waveform ring (see INNER_RADIUS in WaveformRing.js) */
 .vinyl-image {
   border-radius: 50%;
   position: absolute;
-  max-width: calc(100% - 20px);
-  width: 300px;
-  height: 300px;
+  width: calc(var(--ring-size) * 0.72);
+  height: calc(var(--ring-size) * 0.72);
   object-fit: cover;
 }
 .vinyl-image.loading {

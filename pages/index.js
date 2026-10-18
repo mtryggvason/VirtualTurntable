@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Rotate from "../src/svgs/rotate.svg";
 import useTurntable, { rotationToRate } from "../hooks/useTurntable";
+import WaveformRing from "../components/WaveformRing";
 
 import NoSleep from "nosleep.js";
 
@@ -9,7 +10,7 @@ function App() {
   const [showMessage, setShowMessage] = useState(false);
   const [showRotatingMessage, setShowRotatingMessage] = useState(false);
 
-  const { ready, start, setRate } = useTurntable("./socks.mp3");
+  const { ready, start, setRate, peaks, getPosition } = useTurntable("./socks.mp3");
   useEffect(() => {
     setShowMessage(
       !window.DeviceOrientationEvent || !DeviceMotionEvent.requestPermission
@@ -48,6 +49,7 @@ function App() {
         <div className="track-title">Moff & Tarkin - Socks by the Sofa</div>
       </div>
       <div className="vinyl-wrapper">
+        <WaveformRing peaks={peaks} getPosition={getPosition} />
         <img
           alt="vinyl"
           className={`vinyl-image  ${ready ? "" : "loading"}`}

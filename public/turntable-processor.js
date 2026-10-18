@@ -19,6 +19,7 @@ class TurntableProcessor extends AudioWorkletProcessor {
     this.length = 0;
     this.position = 0;
     this.rate = 0;
+    this.blocks = 0;
     this.smoothing = 1 - Math.exp(-1 / (RATE_SMOOTHING_SECONDS * sampleRate));
     this.port.onmessage = (e) => {
       this.channels = e.data.channels;
@@ -67,6 +68,11 @@ class TurntableProcessor extends AudioWorkletProcessor {
       } else if (this.position < 0) {
         this.position += this.length;
       }
+    }
+    // Report the read head to the main thread (~40Hz) for the waveform display
+    this.blocks++;
+    if (this.blocks % 8 === 0) {
+      this.port.postMessage({ position: this.position, rate: this.rate });
     }
     return true;
   }
