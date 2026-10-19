@@ -125,6 +125,16 @@ html {
   text-align: center;
 }
 
+.message--qr {
+  line-height: 20px;
+}
+
+.message-qr {
+  display: block;
+  flex-shrink: 0;
+  margin-top: 12px;
+}
+
 .message-close {
   position: absolute;
   right: 0;

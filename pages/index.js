@@ -5,6 +5,7 @@ import WaveformRing from "../components/WaveformRing";
 import WaveformOverview from "../components/WaveformOverview";
 import CloseButton from "../components/CloseButton";
 import useHasGyroscope from "../hooks/useHasGyroscope";
+import NoGyroscopeMessage from "../components/NoGyroscopeMessage";
 
 import NoSleep from "nosleep.js";
 
@@ -74,15 +75,7 @@ function App() {
             Turn off silent mode and spin the phone to hear the song play
           </div>
         )}
-        {hasGyroscope === false && (
-          <div className="message">
-            This turntable is played by spinning your phone, and this device
-            has no motion sensor.
-            <br />
-            <br />
-            Open this page on your phone to listen.
-          </div>
-        )}
+        {hasGyroscope === false && <NoGyroscopeMessage />}
       </div>
       {hasGyroscope !== false && (
         <WaveformOverview
